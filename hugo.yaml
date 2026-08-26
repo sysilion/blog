@@ -1,0 +1,95 @@
+baseURL: "https://bizu.is-a.dev/blog/"
+locale: "ko-kr"
+defaultContentLanguage: "ko"
+title: "Bizu's Blog"
+theme: "PaperMod"
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+pygmentsUseClasses: true
+
+pagination:
+  pagerSize: 10
+
+minify:
+  disableXML: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+markup:
+  highlight:
+    noClasses: false
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  env: production
+  description: "개발 기록과 잡다한 생각들"
+  author: "Bizu"
+  defaultTheme: auto
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: false
+  ShowToc: true
+  TocOpen: false
+  ShowRssButtonInSectionTermList: true
+  disableScrollToTop: false
+  hidemeta: false
+  comments: false
+
+  homeInfoParams:
+    Title: "안녕하세요 👋"
+    Content: >
+      개발하면서 남기는 기록, 만든 것들, 그리고 잡다한 생각들.
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/sysilion"
+    - name: rss
+      url: "index.xml"
+
+  assets:
+    disableHLJS: true
+    favicon: "favicon.svg"
+    favicon16x16: "favicon.svg"
+    favicon32x32: "favicon.svg"
+    apple_touch_icon: "favicon.svg"
+    safari_pinned_tab: "favicon.svg"
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    threshold: 0.4
+    minMatchCharLength: 2
+    keys: ["title", "permalink", "summary", "content"]
+
+menu:
+  main:
+    - identifier: posts
+      name: 글
+      url: /posts/
+      weight: 10
+    - identifier: archives
+      name: 아카이브
+      url: /archives/
+      weight: 20
+    - identifier: search
+      name: 검색
+      url: /search/
+      weight: 30
+    - identifier: home
+      name: ← 홈
+      url: https://bizu.is-a.dev/
+      weight: 40
