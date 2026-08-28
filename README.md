@@ -32,12 +32,25 @@ summary: "목록에 보일 한 줄 요약"
 ---
 ```
 
+## 위키 쓰기
+
+`content/wiki/` 는 작업하다 알게 된 것을 짧게 쌓는 섹션입니다. 공개 주소는 https://bizu.is-a.dev/blog/wiki/ .
+
+```bash
+hugo new content wiki/my-note.md
+```
+
+글과 같은 사이트·같은 검색을 쓰지만, 홈 목록에는 노출되지 않습니다 (`params.mainSections: ["posts"]`).
+본문은 **무슨 일이 → 원인 → 재현 → 그래서 → 한 줄** 순으로 짧게 씁니다.
+항목이 길어지고 서로 엮이면 `content/posts/` 의 글로 승격시킵니다.
+
 ## 구조
 
 | 경로 | 설명 |
 | --- | --- |
 | `hugo.yaml` | 사이트 설정 (제목, 메뉴, 테마 옵션) |
 | `content/posts/` | 글 (마크다운) |
+| `content/wiki/` | 위키 (짧은 기록) |
 | `content/search.md` | 검색 페이지 |
 | `content/archives.md` | 아카이브 페이지 |
 | `static/` | 그대로 복사되는 정적 파일 (favicon 등) |

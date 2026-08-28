@@ -1,0 +1,9 @@
+{{/* PaperMod 원본은 .Scratch 를 쓴다. hugo server 증분 리빌드마다 Scratch 가 누적돼
+     로컬 검색 인덱스에 같은 글이 계속 중복된다. slice append 로 대체. */}}
+{{- $index := slice -}}
+{{- range site.RegularPages -}}
+    {{- if and (not .Params.searchHidden) (ne .Layout `archives`) (ne .Layout `search`) -}}
+        {{- $index = $index | append (dict "title" .Title "content" .Plain "permalink" .Permalink "summary" .Summary) -}}
+    {{- end -}}
+{{- end -}}
+{{- $index | jsonify -}}

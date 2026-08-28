@@ -33,6 +33,7 @@ markup:
 
 params:
   env: production
+  mainSections: ["posts"]
   description: "개발 기록과 잡다한 생각들"
   author: "Bizu"
   defaultTheme: auto
@@ -81,6 +82,10 @@ menu:
       name: 글
       url: /posts/
       weight: 10
+    - identifier: wiki
+      name: 위키
+      url: /wiki/
+      weight: 15
     - identifier: archives
       name: 아카이브
       url: /archives/
