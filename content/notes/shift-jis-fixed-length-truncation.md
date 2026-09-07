@@ -4,11 +4,12 @@ date: 2026-08-27T17:02:00+09:00
 draft: false
 tags: ["인코딩", "shift-jis", "바이너리", "python"]
 summary: "VMD 본 이름 칸은 15바이트 Shift-JIS. 슬라이스로 자르면 마지막 글자가 깨진다."
+aliases: ["/wiki/shift-jis-fixed-length-truncation/"]
 ---
 
 ## 무슨 일이
 
-MMD 모션 파일(VMD)의 본 이름 칸은 **15바이트 고정**이고 인코딩은 Shift-JIS다.
+MMD 모션 파일([[vmd]])의 본 이름 칸은 **15바이트 고정**이고 인코딩은 [[shift-jis|Shift-JIS]]다.
 `name.encode("shift_jis")[:15]`로 잘랐더니 이름이 깨졌다.
 
 ## 원인

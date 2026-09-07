@@ -1,0 +1,83 @@
+{{- define "main" }}
+{{- $terms := sort (where site.RegularPages "Section" "wiki") "Title" }}
+{{- $notes := where site.RegularPages "Section" "notes" }}
+
+{{- /* 머리글자 색인. $order 의 인덱스를 앵커로 쓴다 (한글 초성은 urlize 로 살아남지 않음) */}}
+{{- $order := slice "0-9" }}
+{{- $order = $order | append (split "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "") }}
+{{- $order = $order | append (split "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ" "") | append "#" }}
+
+{{- /* 제목순으로 정렬된 $terms 순서를 유지한 채 라벨을 붙인다 */}}
+{{- $rows := slice }}
+{{- range $terms }}
+  {{- $rows = $rows | append (dict "label" (partial "wiki/initial.html" .Title) "page" .) }}
+{{- end }}
+{{- $present := slice }}
+{{- range $rows }}{{ $present = $present | append .label }}{{ end }}
+{{- $present = $present | uniq }}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<div class="post-description">{{ . | markdownify }}</div>{{ end }}
+</header>
+
+{{- with .Content }}
+<div class="post-content md-content">{{ partial "wiki/render.html" . | safeHTML }}</div>
+{{- end }}
+
+<div class="wiki-stats">
+  용어 <strong>{{ len $terms }}</strong>개
+  {{- with site.GetPage "/notes" }} · <a href="{{ .RelPermalink }}">노트 {{ len $notes }}개</a>{{ end }}
+</div>
+
+<nav class="wiki-jump" aria-label="머리글자 색인">
+  {{- range $i, $l := $order }}
+    {{- if in $present $l }}<a href="#idx-{{ $i }}">{{ $l }}</a>
+    {{- else }}<span>{{ $l }}</span>{{ end }}
+  {{- end }}
+</nav>
+
+{{- range $i, $l := $order }}
+  {{- with where $rows "label" $l }}
+  <section class="wiki-group" id="idx-{{ $i }}">
+    <h2 class="wiki-group-label">{{ $l }}</h2>
+    <dl class="wiki-index">
+      {{- range . }}
+        {{- with .page }}
+      <dt>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- with .Params.altnames }}<span class="wiki-alt">{{ delimit . " · " }}</span>{{ end }}
+      </dt>
+      <dd>{{ .Params.summary | default (.Summary | plainify | truncate 110) }}</dd>
+        {{- end }}
+      {{- end }}
+    </dl>
+  </section>
+  {{- end }}
+{{- end }}
+
+{{- with partial "wiki/wanted.html" . }}
+<section class="wiki-wanted" id="wanted">
+  <h2>아직 없는 문서 <span class="wiki-rel-count">{{ len . }}</span></h2>
+  <p class="wiki-wanted-help">
+    링크는 걸렸지만 문서가 없는 용어입니다. 본문에서는
+    <span class="wl wl-missing">이렇게</span> 표시됩니다.
+  </p>
+  <ul class="wiki-wanted-list">
+    {{- range $w := . }}
+    <li id="wanted-{{ $w.key }}">
+      <code class="wiki-wanted-key">{{ $w.target }}</code>
+      {{- with site.Params.wiki.newPageBase }}
+      <a class="wiki-wanted-new" href="{{ printf "%s?filename=%s.md" . $w.key }}" rel="noopener">만들기</a>
+      {{- end }}
+      <span class="wiki-wanted-from">
+        {{- range $i, $p := $w.pages }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}
+      </span>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}
+
+{{- end }}{{/* end main */}}

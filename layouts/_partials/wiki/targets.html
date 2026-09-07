@@ -1,0 +1,7 @@
+{{- /* 한 페이지가 [[..]] 로 가리키는 정규화된 용어 키 목록 (중복 제거). */ -}}
+{{- $keys := slice -}}
+{{- range $m := findRE `\[\[[^\s\]|][^\]]*?\]\]` (partial "wiki/rawtext.html" .) 2000 -}}
+  {{- $t := index (split (replaceRE `^\[\[|\]\]$` "" $m) "|") 0 -}}
+  {{- $keys = $keys | append (partial "wiki/normalize.html" (replaceRE `^\s+|\s+$` "" $t)) -}}
+{{- end -}}
+{{- return ($keys | uniq) -}}

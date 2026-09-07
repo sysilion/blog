@@ -21,7 +21,9 @@ hugo new content posts/글-제목.md   # 초안 생성
 hugo server -D                       # 로컬 미리보기 (draft 포함)
 ```
 
-프론트매터에서 `draft: false`로 바꾸고 push 하면 GitHub Actions가 알아서 빌드·배포합니다.
+프론트매터에서 `draft: false`로 바꾸고 push 하면 [[github-actions|GitHub Actions]]가 알아서 빌드·배포합니다.
+
+[[hugo]] + [[papermod]] 조합입니다.
 
 ## 코드 블록도 잘 나옵니다
 

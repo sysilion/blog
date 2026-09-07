@@ -19,7 +19,7 @@ Blender를 띄우지 않고 순수 Python으로 처리한다. 아래는 만들�
 ## 1. 파이프라인을 파일 경로로만 잇는다
 
 각 단계가 함수 호출이 아니라 **파일**로 연결된다. `extract`가 스켈레톤 JSON을 뱉고,
-`export`가 그걸 읽어 VMD를 만든다.
+`export`가 그걸 읽어 [[vmd]]를 만든다.
 
 ```bash
 python -m autommd extract -e mediapipe -i dance.mp4 -o out/skeleton.json
@@ -46,7 +46,7 @@ _MORPH_FRAME = struct.Struct("<15sIf")   # 모프는 23바이트, 보간 곡선�
 
 여기서 두 가지가 걸린다.
 
-**본 이름을 바이트로 자르면 안 된다.** 이름 칸은 15바이트인데 인코딩은 Shift-JIS다.
+**본 이름을 바이트로 자르면 안 된다.** 이름 칸은 15바이트인데 인코딩은 [[shift-jis|Shift-JIS]]다.
 `左ひじ` 같은 이름은 글자당 2바이트라, 15바이트에서 무심코 자르면 마지막 글자가 반쪽만 남아
 디코드가 깨진다. 한 글자씩 넣다가 넘치면 멈추는 수밖에 없다.
 

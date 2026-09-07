@@ -4,11 +4,12 @@ date: 2026-08-27T16:10:00+09:00
 draft: false
 tags: ["chzzk", "api", "리버스엔지니어링"]
 summary: "count=500을 보내도 200건이 온다. 파라미터가 아니라 응답을 믿어야 한다."
+aliases: ["/wiki/chzzk-vod-chat-api-ignores-count/"]
 ---
 
 ## 무슨 일이
 
-CHZZK VOD 채팅 수집 API에 `count`를 넉넉히 넣어 요청 수를 줄이려 했다. 안 줄었다.
+[[chzzk]] VOD 채팅 수집 API에 `count`를 넉넉히 넣어 요청 수를 줄이려 했다. 안 줄었다.
 
 ```text
 GET /service/v1/videos/{videoNo}/chats?count={size}&playerMessageTime={cursor}
@@ -18,7 +19,7 @@ GET /service/v1/videos/{videoNo}/chats?count={size}&playerMessageTime={cursor}
 
 ## 원인
 
-문서화되지 않은 내부 API다. 서버가 파라미터를 받기만 하고 쓰지 않는다. 클라이언트(웹 플레이어)가
+문서화되지 않은 [[undocumented-api|내부 API]]다. 서버가 파라미터를 받기만 하고 쓰지 않는다. 클라이언트(웹 플레이어)가
 늘 같은 값을 보내니 서버 쪽에서 유효성을 지킬 이유가 없었을 것이다.
 
 ## 그래서

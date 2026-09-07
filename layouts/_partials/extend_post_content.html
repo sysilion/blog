@@ -1,0 +1,43 @@
+{{- /* 본문 뒤에 붙는 문서 간 연결.
+       - 용어 문서: 여기를 가리키는 문서(역링크) + 관련 용어
+       - 글 · 노트: 이 글이 다루는 용어(순링크) */ -}}
+
+{{- $fwd := partial "wiki/forwardlinks.html" . -}}
+{{- if eq .Section "wiki" -}}
+  {{- $back := partial "wiki/backlinks.html" . -}}
+  {{- if $back }}
+  <section class="wiki-rel wiki-backlinks">
+    <h2>여기를 가리키는 문서 <span class="wiki-rel-count">{{ len $back }}</span></h2>
+    {{- range $g := slice (slice "posts" "글") (slice "notes" "노트") (slice "wiki" "용어") }}
+      {{- $items := where $back "Section" (index $g 0) }}
+      {{- with $items }}
+      <ul class="wiki-rel-list">
+        {{- range . }}
+        <li>
+          <span class="wiki-kind wiki-kind-{{ .Section }}">{{ index $g 1 }}</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    {{- end }}
+  </section>
+  {{- end }}
+  {{- with $fwd }}
+  <section class="wiki-rel wiki-forwardlinks">
+    <h2>관련 용어</h2>
+    <ul class="wiki-rel-inline">
+      {{- range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+    </ul>
+  </section>
+  {{- end }}
+{{- else -}}
+  {{- with $fwd }}
+  <section class="wiki-rel wiki-forwardlinks">
+    <h2>이 글이 다루는 용어</h2>
+    <ul class="wiki-rel-inline">
+      {{- range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+    </ul>
+  </section>
+  {{- end }}
+{{- end -}}

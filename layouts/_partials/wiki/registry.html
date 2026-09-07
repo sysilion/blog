@@ -1,0 +1,16 @@
+{{- /* 위키 용어 레지스트리: 정규화된 이름 → { url, title, slug }.
+       한 용어 문서의 파일 slug · 제목 · altnames 를 모두 키로 등록한다.
+       먼저 등록된 키가 이긴다(문서끼리 이름이 겹칠 때 결정적으로 동작하도록). */ -}}
+{{- $reg := dict -}}
+{{- range where site.RegularPages "Section" "wiki" -}}
+  {{- $entry := dict "url" .RelPermalink "title" .Title "slug" .File.ContentBaseName "page" . -}}
+  {{- $names := slice .File.ContentBaseName .Title -}}
+  {{- with .Params.altnames }}{{ $names = $names | append . }}{{ end -}}
+  {{- range $names -}}
+    {{- $k := partial "wiki/normalize.html" . -}}
+    {{- if and $k (not (isset $reg $k)) -}}
+      {{- $reg = merge $reg (dict $k $entry) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $reg -}}

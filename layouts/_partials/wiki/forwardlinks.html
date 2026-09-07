@@ -1,0 +1,13 @@
+{{- /* 이 페이지가 [[..]] 로 가리키는 용어 문서 목록 (해석된 것만). */ -}}
+{{- $reg := partialCached "wiki/registry.html" "reg" -}}
+{{- $urls := slice -}}
+{{- $found := slice -}}
+{{- range $k := partial "wiki/targets.html" . -}}
+  {{- with index $reg $k -}}
+    {{- if not (in $urls .url) -}}
+      {{- $urls = $urls | append .url -}}
+      {{- $found = $found | append .page -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (sort $found "Title") -}}

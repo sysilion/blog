@@ -4,6 +4,7 @@ date: 2026-08-27T15:10:00+09:00
 draft: false
 tags: ["hugo", "papermod", "go-template"]
 summary: "index.json 이 .Scratch 로 쌓여서, 증분 리빌드마다 같은 글이 한 번씩 더 붙는다. 프로덕션 빌드는 멀쩡하다."
+aliases: ["/wiki/papermod-search-index-scratch-duplicate/"]
 ---
 
 ## 무슨 일이
@@ -13,7 +14,7 @@ summary: "index.json 이 .Scratch 로 쌓여서, 증분 리빌드마다 같은 �
 
 ## 원인
 
-PaperMod의 `layouts/index.json` 은 `.Scratch` 에 결과를 누적한다.
+[[papermod]]의 `layouts/index.json` 은 [[hugo-scratch|.Scratch]] 에 결과를 누적한다.
 
 ```go-html-template
 {{- $.Scratch.Add "index" slice -}}
@@ -62,4 +63,4 @@ $ curl -s localhost:1313/blog/index.json | jq length
 
 ## 한 줄
 
-> Hugo 템플릿에서 누적이 필요하면 `.Scratch` 말고 `$x = $x | append`. `.Scratch` 의 수명은 빌드가 아니라 페이지다.
+> [[hugo]] 템플릿에서 누적이 필요하면 `.Scratch` 말고 `$x = $x | append`. `.Scratch` 의 수명은 빌드가 아니라 페이지다.

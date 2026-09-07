@@ -1,0 +1,144 @@
+/* ── 위키링크 ───────────────────────────────────────────── */
+.post-content a.wl {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(var(--theme-rgb, 0, 0, 0), 0.25);
+  border-bottom-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  color: var(--primary);
+  text-decoration: none;
+  padding: 0 1px;
+}
+.post-content a.wl:hover {
+  background: var(--code-bg);
+  border-bottom-color: var(--primary);
+}
+.post-content a.wl::after { content: none; }
+
+.post-content a.wl-missing,
+.wl.wl-missing {
+  color: #c0392b;
+  border-bottom: 1px dashed #c0392b;
+  cursor: help;
+}
+.dark .post-content a.wl-missing,
+.dark .wl.wl-missing { color: #ff7b6b; border-bottom-color: #ff7b6b; }
+
+/* ── 본문 뒤 관련 문서 블록 ─────────────────────────────── */
+.wiki-rel {
+  margin: 2.2rem 0 0;
+  padding: 1rem 1.2rem;
+  background: var(--code-bg);
+  border-radius: var(--radius);
+}
+.wiki-rel h2 {
+  margin: 0 0 .6rem;
+  font-size: 15px;
+  letter-spacing: .02em;
+  color: var(--secondary);
+}
+.wiki-rel-count {
+  display: inline-block;
+  min-width: 1.4em;
+  padding: 0 .4em;
+  border-radius: 999px;
+  background: var(--tertiary);
+  color: var(--secondary);
+  font-size: 12px;
+  text-align: center;
+}
+.wiki-rel-list { margin: 0 0 .4rem; padding: 0; list-style: none; }
+.wiki-rel-list li { margin: .25rem 0; display: flex; gap: .5rem; align-items: baseline; }
+.wiki-rel-list a, .wiki-rel-inline a { text-decoration: none; box-shadow: none; }
+.wiki-rel-list a:hover, .wiki-rel-inline a:hover { text-decoration: underline; }
+
+.wiki-kind {
+  flex: 0 0 auto;
+  min-width: 2.4em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  text-align: center;
+  background: var(--tertiary);
+  color: var(--secondary);
+}
+.wiki-kind-posts { background: var(--primary); color: var(--theme); }
+
+.wiki-rel-inline { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .4rem .5rem; }
+.wiki-rel-inline a {
+  display: inline-block;
+  padding: 2px 9px;
+  border: 1px solid var(--tertiary);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+/* ── 위키 색인 ──────────────────────────────────────────── */
+.wiki-stats { margin: .2rem 0 1rem; color: var(--secondary); font-size: 14px; }
+.wiki-stats a { text-decoration: none; }
+
+.wiki-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem .3rem;
+  padding: .6rem .7rem;
+  margin-bottom: 1.6rem;
+  background: var(--code-bg);
+  border: 1px solid var(--tertiary);
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+.wiki-jump a, .wiki-jump span {
+  min-width: 1.7em;
+  padding: 2px 0;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.wiki-jump a { color: var(--primary); font-weight: 600; }
+.wiki-jump a:hover { background: var(--tertiary); }
+.wiki-jump span { color: var(--tertiary); }
+
+.wiki-group { margin-bottom: 1.8rem; scroll-margin-top: 5rem; }
+.wiki-group-label {
+  margin: 0 0 .5rem;
+  padding-bottom: .25rem;
+  border-bottom: 1px solid var(--tertiary);
+  font-size: 20px;
+  color: var(--secondary);
+}
+.wiki-index { margin: 0; }
+.wiki-index dt { margin-top: .7rem; font-weight: 600; }
+.wiki-index dt a { text-decoration: none; }
+.wiki-index dt a:hover { text-decoration: underline; }
+.wiki-index dd {
+  margin: .1rem 0 0;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.wiki-alt { margin-left: .5rem; font-weight: 400; font-size: 12px; color: var(--secondary); opacity: .7; }
+
+/* ── 아직 없는 문서 ─────────────────────────────────────── */
+.wiki-wanted { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--tertiary); }
+.wiki-wanted h2 { font-size: 18px; margin: 0 0 .3rem; }
+.wiki-wanted-help { margin: 0 0 .8rem; color: var(--secondary); font-size: 14px; }
+.wiki-wanted-list { margin: 0; padding: 0; list-style: none; }
+.wiki-wanted-list li {
+  padding: .35rem 0;
+  scroll-margin-top: 5rem;
+  border-bottom: 1px dotted var(--tertiary);
+  font-size: 14px;
+}
+.wiki-wanted-list li:target { background: color-mix(in srgb, #c0392b 12%, transparent); }
+.wiki-wanted-key { color: #c0392b; }
+.dark .wiki-wanted-key { color: #ff7b6b; }
+.wiki-wanted-new {
+  margin-left: .5rem;
+  font-size: 12px;
+  text-decoration: none;
+  color: var(--secondary);
+  border: 1px solid var(--tertiary);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.wiki-wanted-from { margin-left: .5rem; color: var(--secondary); }
+.wiki-wanted-from a { text-decoration: none; }

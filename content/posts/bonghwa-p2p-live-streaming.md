@@ -6,7 +6,7 @@ tags: ["bonghwa", "p2p", "webrtc", "스트리밍", "연구"]
 summary: "WebRTC DataChannel로 영상 chunk를 전파하는 라이브 스트리밍 프로토타입. MediaRecorder를 자르는 문제, leecher 대응, 그리고 자기 신고를 믿지 않는 점수 체계."
 ---
 
-[봉화](https://github.com/sysilion/bonghwa)는 시청자가 동시에 릴레이 노드가 되는 P2P 라이브
+[봉화](https://github.com/sysilion/bonghwa)는 시청자가 동시에 릴레이 노드가 되는 [[p2p|P2P]] 라이브
 스트리밍 프로토타입이다. 산봉우리에서 산봉우리로 신호를 넘기는 봉화에서 이름을 땄다.
 
 핵심 구조는 한 줄로 요약된다. **영상 데이터는 P2P로, 제어 정보만 서버로.**
@@ -27,7 +27,7 @@ viewer ◄══ WebRTC DataChannel ══ viewer      └ 기여도 수집 + up
 
 ## 1. MediaRecorder를 chunk마다 재시작하면 영상이 사라진다
 
-라이브를 chunk로 쪼개려면 일정 간격으로 잘라야 한다. 가장 순진한 방법은 `MediaRecorder`를
+라이브를 chunk로 쪼개려면 일정 간격으로 잘라야 한다. 가장 순진한 방법은 [[mediarecorder]]를
 1.5초마다 `stop()`하고 다시 `start()`하는 것이다. **이러면 영상이 없어진다.**
 
 `stop()`이 인코더의 미인코딩 백로그를 그냥 버리기 때문이다. 2880×1368 화면 공유에서 재보니
@@ -35,10 +35,10 @@ chunk 13개 전부 마지막 프레임이 1.08초 이전에 끝났다 — **녹�
 증발했고, 실효 프레임레이트가 2.6fps로 떨어졌다.**
 
 해법은 recorder를 멈추지 않는 것이다. 하나만 계속 돌리고(`start(timeslice)`) 나오는
-바이트 스트림을 직접 자른다. 문제는 두 번째 이후 blob에는 WebM 헤더가 없어서 그대로는
+바이트 스트림을 직접 자른다. 문제는 두 번째 이후 blob에는 [[webm|WebM]] 헤더가 없어서 그대로는
 독립 디코딩이 안 된다는 점이다.
 
-그래서 **최소한의 EBML 파서**를 짰다.
+그래서 **최소한의 [[webm|EBML]] 파서**를 짰다.
 
 - 첫 blob에서 init segment(헤더)를 떼어 보관하고, chunk마다 앞에 붙인다
 - **keyframe으로 시작하는 cluster 경계에서만** 자른다
@@ -106,7 +106,7 @@ tracker는 10초마다 오는 기여도 리포트로 upstream 추천 순위를 �
 설계 결정이 나왔다.
 
 **`sentBytes`는 보낸 쪽의 자기 신고다.** 크게 적으면 최우선 upstream이 되어 점수 체계 전체가
-무력화된다. 그래서 받은 쪽이 신고한 `links[].recv`를 **증언**으로 쓴다.
+무력화된다. 그래서 받은 쪽이 신고한 `links[].recv`를 **[[attestation|증언]]**으로 쓴다.
 
 ```js
 const credibility = Math.min(1, attestedBytes / Math.max(p.report.sentBytes, 1));
@@ -115,7 +115,7 @@ const sentRate = p.rates.sent * credibility;
 
 정직한 peer는 두 값이 일치하므로 `credibility = 1`이다. 부풀린 만큼 그대로 깎인다.
 
-남는 구멍도 코드에 적어뒀다. **서로 증언해 주는 공모(sybil)는 막지 못한다.** 그래서 두 번째
+남는 구멍도 코드에 적어뒀다. **서로 증언해 주는 [[sybil-attack|공모(sybil)]]는 막지 못한다.** 그래서 두 번째
 방어선이 있다 — 같은 IP에 몰린 peer에 **제곱 감점**을 준다.
 
 ```js
@@ -177,7 +177,7 @@ const BITS_PER_PIXEL_FRAME = 0.09; // 2.5Mbps @ 1280×720×30 에서 역산한 �
 
 ## 8. RTMP ingest — WebRTC 없는 참가자
 
-OBS로 방송하려면 브라우저가 없다. ffmpeg가 RTMP를 받아 1.5초 WebM 세그먼트로 트랜스코딩해서
+OBS로 방송하려면 브라우저가 없다. [[ffmpeg]]가 RTMP를 받아 1.5초 [[webm|WebM]] 세그먼트로 트랜스코딩해서
 tracker에 올린다.
 
 이 프로세스는 **headless streamer**로 참가한다. `webrtc:false`로 join해서 upstream 추천에서

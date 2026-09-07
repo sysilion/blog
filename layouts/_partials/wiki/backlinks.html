@@ -1,0 +1,13 @@
+{{- /* 이 용어 문서를 [[..]] 로 가리키는 페이지 목록.
+       MediaWiki 의 '여기를 가리키는 문서', Obsidian 의 Backlinks. 최신순. */ -}}
+{{- $target := . -}}
+{{- $names := partial "wiki/names.html" $target -}}
+{{- $found := slice -}}
+{{- range $p := site.RegularPages -}}
+  {{- if ne $p.RelPermalink $target.RelPermalink -}}
+    {{- if intersect $names (partial "wiki/targets.html" $p) -}}
+      {{- $found = $found | append $p -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (sort $found "Date" "desc") -}}

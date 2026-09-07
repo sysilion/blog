@@ -1,0 +1,19 @@
+{{- /* 색인용 머리글자. 0-9 · A-Z · ㄱ-ㅎ(초성) · # (기타).
+       한글 초성은 코드포인트 경계 문자와 문자열 비교로 구한다 (쌍자음은 단자음에 합침). */ -}}
+{{- $c := substr (. | default "#" | string) 0 1 -}}
+{{- $u := upper $c -}}
+{{- $label := "#" -}}
+{{- if and (ge $u "A") (le $u "Z") -}}
+  {{- $label = $u -}}
+{{- else if and (ge $c "0") (le $c "9") -}}
+  {{- $label = "0-9" -}}
+{{- else if and (ge $c "가") (le $c "힣") -}}
+  {{- range $b := slice
+        (slice "하" "ㅎ") (slice "파" "ㅍ") (slice "타" "ㅌ") (slice "카" "ㅋ") (slice "차" "ㅊ")
+        (slice "짜" "ㅈ") (slice "자" "ㅈ") (slice "싸" "ㅅ") (slice "사" "ㅅ") (slice "빠" "ㅂ")
+        (slice "바" "ㅂ") (slice "마" "ㅁ") (slice "라" "ㄹ") (slice "따" "ㄷ") (slice "다" "ㄷ")
+        (slice "나" "ㄴ") (slice "까" "ㄱ") (slice "가" "ㄱ") -}}
+    {{- if and (eq $label "#") (ge $c (index $b 0)) -}}{{- $label = index $b 1 -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $label -}}

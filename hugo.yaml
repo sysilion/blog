@@ -50,6 +50,10 @@ params:
   hidemeta: false
   comments: false
 
+  wiki:
+    # 빨간 링크의 '만들기' 버튼이 가리킬 곳
+    newPageBase: "https://github.com/sysilion/blog/new/main/content/wiki"
+
   homeInfoParams:
     Title: "안녕하세요 👋"
     Content: >
@@ -86,6 +90,10 @@ menu:
       name: 위키
       url: /wiki/
       weight: 15
+    - identifier: notes
+      name: 노트
+      url: /notes/
+      weight: 17
     - identifier: archives
       name: 아카이브
       url: /archives/

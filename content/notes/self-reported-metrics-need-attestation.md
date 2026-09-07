@@ -4,16 +4,17 @@ date: 2026-08-27T17:00:00+09:00
 draft: false
 tags: ["p2p", "보안", "설계"]
 summary: "sentBytes를 크게 적으면 1등이 된다. 받은 쪽의 recv를 증언으로 쓰면 단독 위조는 막힌다."
+aliases: ["/wiki/self-reported-metrics-need-attestation/"]
 ---
 
 ## 무슨 일이
 
-P2P 스트리밍에서 기여도 순위를 매기는데, 기여도의 원천이 **보낸 쪽의 자기 신고**(`sentBytes`)였다.
+[[p2p|P2P]] 스트리밍에서 기여도 순위를 매기는데, 기여도의 원천이 **보낸 쪽의 자기 신고**(`sentBytes`)였다.
 크게 적으면 최우선 upstream이 된다. 점수 체계 전체가 무의미해진다.
 
 ## 그래서
 
-받은 쪽이 신고한 `links[].recv`를 **증언(attestation)** 으로 쓰고, 자기 신고를 증언 비율만큼만
+받은 쪽이 신고한 `links[].recv`를 **[[attestation|증언(attestation)]]** 으로 쓰고, 자기 신고를 증언 비율만큼만
 인정한다.
 
 ```js
@@ -25,7 +26,7 @@ const sentRate = p.rates.sent * credibility;
 
 ## 남는 구멍과 두 번째 방어선
 
-증언 방식은 **서로 밀어주는 공모(sybil)** 를 막지 못한다. 그래서 같은 IP에 몰린 peer에
+증언 방식은 **서로 밀어주는 [[sybil-attack|공모(sybil)]]** 를 막지 못한다. 그래서 같은 IP에 몰린 peer에
 **제곱 감점**을 건다 (GossipSub v1.1의 P6).
 
 ```js

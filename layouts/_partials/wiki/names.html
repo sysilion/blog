@@ -1,0 +1,6 @@
+{{- /* 한 용어 문서를 가리킬 수 있는 정규화된 이름 전부 (slug · 제목 · altnames). */ -}}
+{{- $names := slice (partial "wiki/normalize.html" .File.ContentBaseName) (partial "wiki/normalize.html" .Title) -}}
+{{- range .Params.altnames -}}
+  {{- $names = $names | append (partial "wiki/normalize.html" .) -}}
+{{- end -}}
+{{- return ($names | uniq) -}}

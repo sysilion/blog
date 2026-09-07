@@ -1,0 +1,23 @@
+{{- /* 아직 문서가 없는데 링크된 용어들 (MediaWiki 의 '필요한 문서').
+       [ { key, target, pages } ] 형태로 반환. */ -}}
+{{- $reg := partialCached "wiki/registry.html" "reg" -}}
+{{- $flat := slice -}}
+{{- range $p := site.RegularPages -}}
+  {{- range $m := findRE `\[\[[^\s\]|][^\]]*?\]\]` (partial "wiki/rawtext.html" $p) 2000 -}}
+    {{- $t := replaceRE `^\s+|\s+$` "" (index (split (replaceRE `^\[\[|\]\]$` "" $m) "|") 0) -}}
+    {{- $k := partial "wiki/normalize.html" $t -}}
+    {{- if not (index $reg $k) -}}
+      {{- $flat = $flat | append (dict "key" $k "target" $t "page" $p) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $out := slice -}}
+{{- $keys := slice -}}
+{{- range $flat }}{{ $keys = $keys | append .key }}{{ end -}}
+{{- range $k := ($keys | uniq | sort) -}}
+  {{- $rows := where $flat "key" $k -}}
+  {{- $pages := slice -}}
+  {{- range $rows }}{{ if not (in $pages .page) }}{{ $pages = $pages | append .page }}{{ end }}{{ end -}}
+  {{- $out = $out | append (dict "key" $k "target" (index $rows 0).target "pages" $pages) -}}
+{{- end -}}
+{{- return $out -}}

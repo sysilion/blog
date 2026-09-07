@@ -4,11 +4,12 @@ date: 2026-08-27T16:55:00+09:00
 draft: false
 tags: ["브라우저", "favicon", "canvas"]
 summary: "SVG 애니메이션도 GIF/APNG도 파비콘으로는 안 움직인다. 매 프레임 href를 갈아끼우는 수밖에 없다."
+aliases: ["/wiki/animated-favicon-needs-canvas/"]
 ---
 
 ## 무슨 일이
 
-SVG 파비콘에 CSS/SMIL 애니메이션을 넣었다. 탭에서 안 움직인다. GIF와 APNG로 바꿔도 안 움직인다.
+SVG [[favicon|파비콘]]에 CSS/SMIL 애니메이션을 넣었다. 탭에서 안 움직인다. GIF와 APNG로 바꿔도 안 움직인다.
 
 ## 원인
 

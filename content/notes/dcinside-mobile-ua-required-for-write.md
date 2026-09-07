@@ -4,6 +4,7 @@ date: 2026-08-27T16:25:00+09:00
 draft: false
 tags: ["dcinside", "크롤링", "user-agent"]
 summary: "같은 사이트라도 PC 경로와 모바일 경로의 검증 강도가 다르다. 약한 쪽을 쓰되 UA를 맞춰야 한다."
+aliases: ["/wiki/dcinside-mobile-ua-required-for-write/"]
 ---
 
 ## 무슨 일이
@@ -11,11 +12,11 @@ summary: "같은 사이트라도 PC 경로와 모바일 경로의 검증 강도�
 디시인사이드 글/댓글 작성을 PC 경로(`gall.dcinside.com`)로 구현하려니 검증 단계가 계속 늘어났다.
 모바일 웹(`m.dcinside.com`)은 폼 토큰 하나로 끝난다.
 
-그런데 모바일 URL로 요청해도 데스크톱 User-Agent면 **PC 사이트로 리다이렉트**된다.
+그런데 모바일 URL로 요청해도 데스크톱 [[user-agent|User-Agent]]면 **PC 사이트로 리다이렉트**된다.
 
 ## 원인
 
-UA 스니핑으로 모바일/PC를 가르는 전형적인 구현이다. 경로가 아니라 UA가 사이트를 정한다.
+[[user-agent|UA 스니핑]]으로 모바일/PC를 가르는 전형적인 구현이다. 경로가 아니라 UA가 사이트를 정한다.
 
 ## 그래서
 

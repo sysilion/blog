@@ -1,0 +1,51 @@
+{{- /* [[slug]] · [[slug|표시명]] 위키링크를 실제 링크로 바꾼다.
+
+       goldmark 는 [[..]] 를 파싱하지 않고 그냥 통과시키므로, 렌더된 HTML 을 후처리한다.
+       두 가지 안전장치:
+         1) <pre>/<code> 블록은 HTML 주석 자리표시자로 빼놨다가 되돌린다 → 코드 예제 보호
+         2) [[ 바로 뒤에 공백이 오면 매칭하지 않는다 → bash 의 [[ -f x ]] 는 안전
+
+       레지스트리에 없는 용어는 빨간 링크(.wl-missing)로 남고, 위키 색인의
+       '아직 없는 문서' 목록으로 모인다.
+
+       Hugo 는 파티셜에 return 을 하나만 허용하므로 전체를 if 로 감쌌다. */ -}}
+{{- $content := . | string -}}
+{{- if strings.Contains $content "[[" -}}
+  {{- $reg := partialCached "wiki/registry.html" "reg" -}}
+  {{- $wikiURL := "/wiki/" | relURL -}}
+  {{- with site.GetPage "/wiki" }}{{ $wikiURL = .RelPermalink }}{{ end -}}
+
+  {{- /* 1. 코드 영역 보호 */ -}}
+  {{- $vault := slice -}}
+  {{- range $i, $block := findRE `(?s)<pre.*?</pre>|<code.*?</code>` $content 2000 -}}
+    {{- $vault = $vault | append $block -}}
+    {{- $content = replace $content $block (printf "<!--WLV%d-->" $i) 1 -}}
+  {{- end -}}
+
+  {{- /* 2. 위키링크 치환 */ -}}
+  {{- range $m := findRE `\[\[[^\s\]|][^\]]*?\]\]` $content 2000 -}}
+    {{- $inner := replaceRE `^\[\[|\]\]$` "" $m -}}
+    {{- $parts := split $inner "|" -}}
+    {{- $target := replaceRE `^\s+|\s+$` "" (index $parts 0) -}}
+    {{- $label := "" -}}
+    {{- if gt (len $parts) 1 -}}
+      {{- $label = replaceRE `^\s+|\s+$` "" (index $parts 1) -}}
+    {{- end -}}
+    {{- $key := partial "wiki/normalize.html" $target -}}
+    {{- $repl := "" -}}
+    {{- with index $reg $key -}}
+      {{- $t := .title | htmlEscape -}}
+      {{- $repl = printf `<a class="wl" href="%s" title="%s">%s</a>` .url $t ($label | default $t) -}}
+    {{- else -}}
+      {{- $repl = printf `<a class="wl wl-missing" href="%s#wanted-%s" title="아직 없는 문서: %s">%s</a>`
+            $wikiURL $key $target ($label | default $target) -}}
+    {{- end -}}
+    {{- $content = replace $content $m $repl 1 -}}
+  {{- end -}}
+
+  {{- /* 3. 코드 영역 복원 */ -}}
+  {{- range $i, $block := $vault -}}
+    {{- $content = replace $content (printf "<!--WLV%d-->" $i) $block 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- return $content -}}
