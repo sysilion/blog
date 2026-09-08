@@ -30,7 +30,7 @@ recorder를 멈추지 않는다. 하나만 계속 돌리고(`start(timeslice)`) 
 2. chunk마다 앞에 붙이고
 3. **keyframe으로 시작하는 cluster 경계에서만** 자른다
 
-최소 [[webm|EBML]] 파서가 필요하다. 요소 ID는 첫 바이트의 선행 0비트 개수가 길이를 정한다.
+최소 [[ebml]] 파서가 필요하다. 요소 ID는 첫 바이트의 선행 0비트 개수가 길이를 정한다.
 
 ```js
 const len = first >= 0x80 ? 1 : first >= 0x40 ? 2 : first >= 0x20 ? 3 : first >= 0x10 ? 4 : 0;
