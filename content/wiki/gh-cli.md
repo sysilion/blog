@@ -24,4 +24,9 @@ gh auth status          # 활성 계정 확인
 gh auth switch -u <계정>
 ```
 
-저장소별로 계정을 고정하려면 `~/.gitconfig` 의 `includeIf "gitdir:..."` 로 디렉토리마다 갈라둔다.
+credential helper로서의 `gh` 는 **계정을 골라주지 않는다.** git이 넘기는 `username=` 과 무관하게
+활성 계정 토큰만 내놓고, 다른 계정 이름에는 빈 응답을 준다 (gh 2.100.0 확인).
+따라서 `credential.https://github.com.username` 을 지정해도 계정이 바뀌지 않는다.
+
+저장소별로 계정을 고정하려면 `~/.gitconfig` 의 `includeIf "gitdir:..."` 로 디렉토리마다 갈라두되,
+**계정별 토큰을 직접 물린 helper를 함께 지정**해야 한다. 아니면 그때그때 `gh auth switch` 를 하는 수밖에 없다.
