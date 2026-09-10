@@ -97,6 +97,35 @@ match: exact=199 near=22 street=72 unverified=4
 
 캐시는 검증 없이 담긴 좌표라 버려야 한다. `CACHE_VERSION` 을 넣어 통째로 무효화했다.
 
+## 결말 — 지오코더를 바꿨다
+
+번지 검증을 붙여도 Photon 은 한계가 뚜렷했다. **OSM 에 한국 번지 자체가 없는 경우**가
+많아 37건이 좌표를 못 얻고, 72건은 도로 중심점으로 떨어졌다.
+
+[[kakao-local-api]] 를 1순위로 두고 Photon 을 폴백으로 남겼다.
+
+```python
+def _init_geocoders():
+    geocoders = []
+    kakao = _init_kakao()          # KAKAO_REST_API_KEY 가 없으면 None
+    if kakao is not None:
+        geocoders.append(("kakao", kakao))
+    geocoders.append(("photon", _init_photon()))
+    return geocoders
+```
+
+| | 실패 | 도로 중심점 | 핀 |
+| --- | --- | --- | --- |
+| Photon (번지 검증 후) | 37 | 72 | 385 |
+| 카카오 + Photon 폴백 | **0** | 4 | **398** |
+
+카카오는 없는 주소에 `total_count: 0` 을 주고 억지 매칭을 하지 않는다.
+`당산로36길 5` 처럼 카카오도 못 찾는 주소는 Photon 폴백이 인접 번지로 받아냈다.
+
+원본 사이트가 좌표를 명시한 매장으로 교차검증한 결과 **0.0 m, 2.6 m, 10.6 m** 로 일치했다.
+배포본 기준 149건의 좌표가 바뀌었고 그중 44건이 100 m 이상, 9건이 1 km 이상 어긋나 있었다.
+
 ## 한 줄
 
 지오코더 응답의 첫 줄을 믿지 말고, 요청한 번지가 응답에 그대로 있는지 대조하라.
+한국 주소라면 애초에 OSM 기반 지오코더를 쓰지 않는 편이 낫다.
