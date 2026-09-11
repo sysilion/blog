@@ -29,3 +29,6 @@ macOS에서 투명 창을 쓰려면 `tauri.conf.json`의 `app.macOSPrivateApi`�
 Cargo 기능 `macos-private-api`를 둘 다 켜야 한다. 한쪽만 켜면 빌드가 막힌다.
 
 창 조작 API는 대부분 비동기 메시지라 **호출 직후에 읽으면 옛날 값이 나온다.**
+
+`TrayIconBuilder::build()`가 돌려주는 `TrayIcon`은 참조 카운트다. 반환값을 버리면
+아이콘도 같이 사라진다 — 생성은 성공하고 `Ok`가 나오므로 알아채기 어렵다.
