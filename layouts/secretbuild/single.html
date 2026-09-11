@@ -1,0 +1,4 @@
+{{- /* 비밀글 평문 렌더 전용. scripts/secret.mjs 가 이 출력만 읽어서 암호화한다.
+       define 블록이 없으므로 baseof 를 타지 않는다 → 본문 HTML 만 남는다.
+       위키링크 후처리는 layouts/single.html 과 같은 파티셜을 쓴다. */ -}}
+{{- partial "wiki/render.html" .Content | safeHTML -}}
