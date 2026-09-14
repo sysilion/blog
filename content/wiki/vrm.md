@@ -28,7 +28,6 @@ altnames: ["VRM format", "VRMC_vrm"]
   `GLTFLoader` 에 플러그인으로 붙인다.
 - **정규화 리그**(`getNormalizedBoneNode`)는 모델마다 다른 초기 회전을 지운 좌표계다.
   회전만 다루면 편하지만, `hips` 의 `position.y` 는 의미 있는 값이라 손대면 안 된다.
-  → [[vrm-normalized-hips-position-is-rest-height]]
 - +X가 **모델 기준 왼쪽**이다(+Z를 보고 서 있으므로). 좌우 팔의 회전 부호가 반대가 된다.
 - 스킨드 메시라 장면 그래프를 복제하면 뼈가 얽힌다. 같은 모델을 여러 개 띄우려면
   파일을 다시 파싱하는 편이 확실하다.

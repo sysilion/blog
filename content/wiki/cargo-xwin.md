@@ -34,4 +34,4 @@ XWIN_ACCEPT_LICENSE=1 cargo xwin build  --target x86_64-pc-windows-msvc --releas
 - SDK 캐시는 한 번 받으면 재사용된다(수백 MB).
 - `check` 는 링크를 하지 않아 가장 가볍고, 타입·시그니처·기능 플래그 문제를 거의 다 잡는다.
 - **컴파일 검증일 뿐 동작 검증이 아니다.** 그리고 `cfg` 로 갈린 파일이 실제로 컴파일
-  대상인지는 일부러 오류를 심어 확인해야 한다. → [[verifying-windows-code-from-macos-with-cargo-xwin]]
+  대상인지는 일부러 오류를 심어 확인해야 한다.

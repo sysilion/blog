@@ -33,5 +33,4 @@ ESM이 자리잡기 전, 라이브러리 하나를 `<script>` 태그·npm·Requi
   **Node의 ESM에서는 `self` 도 `this` 도 없다.** 그래서 `import` 만으로는 못 불러온다.
 - **번들러가 `module.exports = ...` 를 고쳐 쓸 수 있다.** `node_modules` 안이면 CommonJS
   변환이 제대로 걸리지만, 소스 트리에 직접 넣은 UMD는 어중간하게 재작성돼 깨진다.
-  → [[vite-rewrites-module-exports-in-umd-source]]
 - 새로 만드는 라이브러리라면 쓸 이유가 없다. ESM으로 내고 필요하면 빌드로 UMD를 함께 낸다.
