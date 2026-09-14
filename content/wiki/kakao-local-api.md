@@ -34,4 +34,4 @@ curl -G "https://dapi.kakao.com/v2/local/search/address.json" \
 
 - `road_address.main_building_no` 로 요청 번지를 한 번 더 대조할 수 있다. 부번은 `sub_building_no` 에 따로 들어간다.
 - **없는 주소는 `total_count: 0` 으로 조용히 빈 배열을 준다.** 억지 매칭을 하지 않는 게 [[photon]] 과 가장 다른 점이다.
-- 실무 정확도는 OSM 기반 지오코더와 차이가 크다. → [[photon-housenumber-mismatch]]
+- 실무 정확도는 OSM 기반 지오코더와 차이가 크다.
