@@ -1,0 +1,18 @@
+/* 자동 생성 커버 (layouts/_partials/cover/auto.html) */
+.entry-cover.auto-cover {
+    margin: 8px 0;
+    overflow: hidden;
+    border-radius: var(--radius);
+    line-height: 0;
+}
+
+.entry-cover .auto-cover-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 1;
+}
+
+.post-single .entry-cover.auto-cover {
+    margin: 16px 0 24px;
+}
