@@ -34,6 +34,8 @@ markup:
 params:
   env: production
   mainSections: ["posts"]
+  # 커버 이미지가 없는 글에 제목 기반 SVG 커버를 자동으로 붙인다. 글 앞머리에서 autoCover: false 로 끈다.
+  autoCover: true
   description: "개발 기록과 잡다한 생각들"
   author: "Bizu"
   defaultTheme: auto
@@ -98,6 +100,10 @@ menu:
       name: 비밀글
       url: /secret/
       weight: 18
+    - identifier: tags
+      name: 태그
+      url: /tags/
+      weight: 19
     - identifier: archives
       name: 아카이브
       url: /archives/

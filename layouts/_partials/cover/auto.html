@@ -1,0 +1,61 @@
+{{- /*
+  커버 이미지가 지정되지 않은 글에 자동으로 붙는 커버.
+  제목+경로의 md5 를 시드로 색과 도형을 정한다 — 같은 글은 항상 같은 그림이 나오고,
+  글이 다르면 확실히 달라 보인다. 텍스트는 넣지 않는다 (제목이 바로 위/옆에 이미 있다).
+
+  inline SVG 라서 이미지 파일이 생기지 않는다. 대신 og:image 로는 못 쓴다.
+*/ -}}
+{{- $hv := dict "0" 0 "1" 1 "2" 2 "3" 3 "4" 4 "5" 5 "6" 6 "7" 7 "8" 8 "9" 9 "a" 10 "b" 11 "c" 12 "d" 13 "e" 14 "f" 15 -}}
+{{- $seed := md5 (printf "%s|%s" .Title .RelPermalink) -}}
+{{- $d := slice -}}
+{{- range $i := seq 0 31 -}}
+  {{- $d = $d | append (index $hv (substr $seed $i 1)) -}}
+{{- end -}}
+
+{{- $hue := mul (add (mul (index $d 0) 16) (index $d 1)) 1.40625 -}}
+{{- $hue2 := math.Mod (add $hue (add 40 (mul (index $d 2) 6))) 360 -}}
+{{- $cols := 8 -}}
+{{- $rows := 4 -}}
+{{- $cw := 150 -}}
+{{- $ch := 100 -}}
+{{- $uid := substr $seed 0 8 -}}
+
+<svg class="auto-cover-svg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="{{ .Title }} 커버 이미지" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg-{{ $uid }}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl({{ $hue }}, 42%, 20%)"/>
+      <stop offset="1" stop-color="hsl({{ $hue2 }}, 52%, 36%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg-{{ $uid }})"/>
+  <g fill="none" stroke="#fff" stroke-width="2">
+    {{- range $i := seq 0 31 }}
+      {{- $v := index $d $i }}
+      {{- $col := math.Mod $i $cols }}
+      {{- $row := math.Floor (div $i $cols) }}
+      {{- /* 셀 중앙에 딱 맞추면 격자가 눈에 띈다. 값과 위치를 섞어 흩뜨린다 */}}
+      {{- $jx := sub (math.Mod (mul (add (mul $v 31) (mul $i 17)) 97) 70) 35 }}
+      {{- $jy := sub (math.Mod (mul (add (mul $v 19) (mul $i 43)) 61) 46) 23 }}
+      {{- $x := add (add (mul $col $cw) (div $cw 2)) $jx }}
+      {{- $y := add (add (mul $row $ch) (div $ch 2)) $jy }}
+      {{- $op := div (add 4 (math.Mod $v 7)) 30.0 }}
+      {{- if lt $v 5 }}
+        {{- /* 빈 칸 — 패턴에 숨 쉴 자리를 만든다 */}}
+      {{- else if lt $v 9 }}
+        <circle cx="{{ $x }}" cy="{{ $y }}" r="{{ add 14 (mul $v 3) }}" opacity="{{ $op }}"/>
+      {{- else if lt $v 13 }}
+        {{- $s := add 26 (mul (math.Mod $v 4) 8) }}
+        <rect x="{{ sub $x (div $s 2) }}" y="{{ sub $y (div $s 2) }}" width="{{ $s }}" height="{{ $s }}"
+              opacity="{{ $op }}" transform="rotate({{ mul $v 7 }} {{ $x }} {{ $y }})"/>
+      {{- else }}
+        {{- $s := add 20 (mul (math.Mod $v 3) 10) }}
+        <path d="M{{ sub $x $s }} {{ add $y $s }} L{{ $x }} {{ sub $y $s }} L{{ add $x $s }} {{ add $y $s }}"
+              opacity="{{ $op }}"/>
+      {{- end }}
+    {{- end }}
+  </g>
+  <g fill="#fff" opacity="0.10">
+    <circle cx="{{ mul (index $d 4) 75 }}" cy="{{ mul (index $d 5) 25 }}" r="{{ add 90 (mul (index $d 6) 12) }}"/>
+  </g>
+</svg>
