@@ -50,7 +50,7 @@
               opacity="{{ $op }}" transform="rotate({{ mul $v 7 }} {{ $x }} {{ $y }})"/>
       {{- else }}
         {{- $s := add 20 (mul (math.Mod $v 3) 10) }}
-        <path d="M{{ sub $x $s }} {{ add $y $s }} L{{ $x }} {{ sub $y $s }} L{{ add $x $s }} {{ add $y $s }}"
+        <path d="M{{ sub $x $s }} {{ add $y $s }} L{{ $x }} {{ sub $y $s }} L{{ add $x $s }} {{ add $y $s }} Z"
               opacity="{{ $op }}"/>
       {{- end }}
     {{- end }}
