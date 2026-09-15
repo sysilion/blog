@@ -34,8 +34,9 @@ markup:
 params:
   env: production
   mainSections: ["posts"]
-  # 커버 이미지가 없는 글에 제목 기반 SVG 커버를 자동으로 붙인다. 글 앞머리에서 autoCover: false 로 끈다.
-  autoCover: true
+  # 커버 이미지가 없는 글에 제목 기반 SVG 커버를 자동으로 붙인다. → layouts/_partials/cover/auto.html
+  # 지금은 꺼둠. 글 내용과 무관한 추상 패턴이라 목록에서 자리만 차지했다. true 로 바꾸면 다시 켜진다.
+  autoCover: false
   description: "개발 기록과 잡다한 생각들"
   author: "Bizu"
   defaultTheme: auto
