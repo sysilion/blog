@@ -43,35 +43,67 @@ if (data.startTodayEvent) { $('.brand_list').removeClass('wait'); setBrandApply(
 else                      { $('.brand_list').addClass('wait');    startTimer(); }
 ```
 
-## 재현
+## 재현 — 쿠키를 주지 않으면 된다
 
-리다이렉트는 **클라이언트가 스스로** 하는 것이다. 그 GET 의 응답 사본만 되돌리면
-페이지가 목록을 가져온다 — 서버에 없는 요청을 만들지 않고, 카드도 누르지 않는다.
+리다이렉트는 참여 상태 때문에 일어난다. 그러니 **참여 상태가 없는 세션**으로 열면 된다.
+같은 API 가 `{"code": "not_login"}` 을 주고, 페이지는 목록 API 로 넘어간다.
 
 ```python
-def unredirect(route, request):
-    if request.method != "GET" or not request.url.split("?")[0].endswith("/renewal/apply"):
-        route.continue_(); return
-    route.fulfill(status=200, content_type="application/json",
-                  body=json.dumps({"code": "not_apply"}))
-
-page.route(lambda u: "/internal/branddraw/renewal/apply" in u
-           and "/apply/status" not in u, unredirect)
+cfg.browser.profile_dir = "./profile_anon"
+shutil.rmtree(BASE / "profile_anon", ignore_errors=True)   # 매번 빈 프로필
+# 쿠키 주입 없음
+page.goto("https://campaign2.naver.com/npay/branddraw/?from=pointtab")
 ```
 
-`route.fetch()` 로 원본을 먼저 읽으려 하면 `Target page... has been closed` 가 난다.
-리다이렉트가 걸린 페이지는 응답 본문을 읽기 전에 떠나버린다. 그래서 참여 상태는
-**착지한 경로**(`/apply/` · `/winner/`)로 판정하고, 목록은 두 번째 로드에서 읽는다.
+```
+brands: 올리브영(마감) · 오늘의집(마감) · 컬리(마감) · 알라딘(마감)
+API 200 /internal/branddraw/renewal/apply {"code": "not_login"}
+startTodayEvent: true | eventStartDate: 2026-09-18T14:00:00
+```
+
+계정을 쓰지 않으니 참여 이력·탐지 표면과 아예 무관하다. 라인업은 어차피 계정별 정보가
+아니다.
+
+## 가로채기로 막으려던 시도는 실패했다
+
+먼저 `page.route` 로 그 GET 의 응답을 `not_apply` 로 바꿔치려 했다. 세 군데서 막혔다.
+
+**1. `page.route` 의 정규식은 fullmatch 다.** URL 일부만 적은 패턴은 한 번도 걸리지 않고,
+조용히 통과한다. 핸들러 호출 횟수를 세어보기 전까지는 "안 걸렸다" 는 걸 알 수 없다.
+
+```python
+page.route(re.compile(r"/internal/branddraw/renewal/apply"), h)        # 안 걸린다
+page.route(re.compile(r".*/internal/branddraw/renewal/apply.*"), h)    # 걸린다
+```
+
+글로브도 같다. `**/npay/branddraw/apply/**` 는 `?t=...` 가 붙은 URL 에 맞지 않았다.
+
+**2. 교차 출처라 CORS 헤더가 필요하다.** 페이지는 `campaign2.naver.com`, API 는
+`mkt-api.naver.com` 이다. `route.fulfill()` 로 만든 응답에
+`access-control-allow-origin`·`access-control-allow-credentials` 를 붙이지 않으면
+브라우저가 버린다.
+
+**3. 전부 가로채면 API 호출 자체가 사라진다.** `ctx.route("**/*")` 로 걸고 그냥
+`route.continue_()` 만 해도 프리플라이트가 깨져 `/internal/…` 요청이 아예 나가지 않았다.
+13건의 정적 자원만 오가고 XHR 은 없었다.
+
+```
+route hits: {'all': 13, 'apply': 0}
+--- responses containing internal/ ---      ← 비어 있다
+```
+
+`route.fetch()` 로 원본을 먼저 읽으려는 것도 안 된다 — 리다이렉트가 걸린 페이지는
+응답 본문을 읽기 전에 떠나며 `Target page... has been closed` 를 낸다.
 
 ## 그래서
 
-- 이렇게 열어보니 14시 이벤트가 끝난 뒤의 `openBrandList` 는 **빈 배열**이었다
-  (화면은 '쉬는 날' `.sec_day_off`). 다음날 라인업은 그 시점에 아직 서버에 없다.
-- 그 목록이 채워지는 시각은 공개 정보가 없다. 커뮤니티 글도 "14시 오픈" 만 반복한다.
-  그래서 22~02시를 한 시간 간격으로 훑어 재기로 했다.
-- 이벤트의 하루는 자정이 아니라 **14시→14시** 다. `eventStartDate` 는 항상 다음 14시고,
-  당첨 유효기간도 익일 14시다.
+- 14시 이벤트가 끝난 뒤의 `openBrandList` 는 비어 있지 않다. **로그인 상태에서 비어
+  보였던 것**이고, 비로그인으로 읽으면 그날 라인업이 마감 표시와 함께 그대로 나온다.
+- 이벤트의 하루는 자정이 아니라 **14시→14시** 다. `eventStartDate` 는 오픈 후에는 그날
+  14:00, 오픈 전에는 다음 14:00 을 가리킨다.
+- 라인업이 언제 새로 올라오는지는 여전히 측정 대상이다. 비로그인 프로브를
+  22·23·00·01·02·06·09:30·12:30·13:50 에 돌려 첫 관측 시각을 적게 해뒀다.
 
 ## 한 줄
 
-화면에 없는 데이터가 서버에도 없는 것은 아니다. 없는 건 그 요청을 할 기회다.
+로그인은 정보를 더 주는 게 아니라, 이 페이지에서는 **정보를 가린다.**
