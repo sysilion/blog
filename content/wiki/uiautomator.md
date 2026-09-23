@@ -31,6 +31,10 @@ adb shell cat /sdcard/window_dump.xml
 
 - **화면 전환 중에는 `null root node` 로 실패한다.** 실패를 '요소 없음' 으로 읽지 말고
   다시 떠야 한다.
+- **덤프는 화면이 idle 이 될 때까지 기다린다.** 계속 다시 그려지는 요소(타이머, GIF)가
+  하나라도 있으면 약 12초 뒤 `could not get idle state` 로 끝나고, 다시 떠도 같다.
+  `animator_duration_scale 0` 으로도 막히지 않는 경우가 있다.
+  → [[uiautomator-dump-never-idle-on-countdown]]
 - **WebView 의 내용은 늦게 채워진다.** 자식 없는 WebView 노드가 나오면 아직 준비되지
   않은 것이다. → [[webview-accessibility-tree-arrives-late]]
 - **WebView 는 자식들의 텍스트를 부모에 합쳐 놓는다.** 텍스트로 찾을 때 후보가
