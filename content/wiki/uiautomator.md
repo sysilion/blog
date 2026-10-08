@@ -44,3 +44,7 @@ adb shell cat /sdcard/window_dump.xml
   거부 목록을 같이 둬야 한다.
 - 비ASCII 문자가 `&#128077;` 같은 수치 참조로 나올 수 있다. 화면 글자와 비교하려면
   이스케이프를 풀어야 한다.
+- **짝 없는 서로게이트 하나에 덤프 전체가 죽는다.** 화면 글자에 깨진 이모지(U+D83D 등)가
+  있으면 XML 직렬화가 `Illegal character` 로 실패한다. 셸에는 `Killed`(137)만 남고 파일은
+  비어 있다. 다시 떠도 같다. 그 요소를 화면 밖으로 스크롤하면 읽힌다.
+  → [[uiautomator-dump-dies-on-lone-surrogate]]
