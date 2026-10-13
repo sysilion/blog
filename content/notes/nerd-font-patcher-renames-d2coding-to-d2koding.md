@@ -22,7 +22,10 @@ D2Coding의 라이선스는 [[ofl|SIL OFL]]이고, `OFL.txt`에 **Reserved Font 
 ( '(d2)( ?)coding(.*)',         r'\1\2Koding\3' ),
 ```
 
-Cascadia Code → CaskaydiaCove, Hack 계열 등 다른 RFN 폰트도 같은 표로 바뀐다.
+Cascadia Code → CaskaydiaCove 등 다른 RFN 폰트도 같은 표로 바뀐다.
+
+반면 Nerd Fonts **공식 릴리스**(3.4.0)에 든 D2Coding은 패밀리명이 `D2CodingLigature Nerd Font` 그대로다.
+직접 패치한 것과 공식 배포본은 이름이 달라서 둘 다 설치하면 별개 폰트로 잡힌다.
 
 ## 재현
 
