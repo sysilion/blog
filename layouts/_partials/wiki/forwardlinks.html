@@ -2,7 +2,7 @@
 {{- $reg := partialCached "wiki/registry.html" "reg" -}}
 {{- $urls := slice -}}
 {{- $found := slice -}}
-{{- range $k := partial "wiki/targets.html" . -}}
+{{- range $k := partialCached "wiki/targets.html" . .Path -}}
   {{- with index $reg $k -}}
     {{- if not (in $urls .url) -}}
       {{- $urls = $urls | append .url -}}

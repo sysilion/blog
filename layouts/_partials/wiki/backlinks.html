@@ -5,7 +5,8 @@
 {{- $found := slice -}}
 {{- range $p := site.RegularPages -}}
   {{- if ne $p.RelPermalink $target.RelPermalink -}}
-    {{- if intersect $names (partial "wiki/targets.html" $p) -}}
+    {{- /* targets 는 페이지별로 한 번만 계산한다 (용어 문서 수 × 전체 페이지 수 만큼 원문 정규식 스캔 방지). */ -}}
+    {{- if intersect $names (partialCached "wiki/targets.html" $p $p.Path) -}}
       {{- $found = $found | append $p -}}
     {{- end -}}
   {{- end -}}

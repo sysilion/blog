@@ -19,8 +19,9 @@
   border-bottom: 1px dashed #c0392b;
   cursor: help;
 }
-.dark .post-content a.wl-missing,
-.dark .wl.wl-missing { color: #ff7b6b; border-bottom-color: #ff7b6b; }
+/* PaperMod 는 다크 모드를 body.dark 가 아니라 html[data-theme="dark"] 로 건다 */
+[data-theme="dark"] .post-content a.wl-missing,
+[data-theme="dark"] .wl.wl-missing { color: #ff7b6b; border-bottom-color: #ff7b6b; }
 
 /* ── 본문 뒤 관련 문서 블록 ─────────────────────────────── */
 .wiki-rel {
@@ -35,6 +36,7 @@
   letter-spacing: .02em;
   color: var(--secondary);
 }
+[data-theme="dark"] .wiki-rel h2 { color: color-mix(in srgb, var(--secondary), var(--primary)); } /* code-bg 위 4.25:1 → 보강 */
 .wiki-rel-count {
   display: inline-block;
   min-width: 1.4em;
@@ -42,6 +44,7 @@
   border-radius: 999px;
   background: var(--tertiary);
   color: var(--secondary);
+  color: color-mix(in srgb, var(--secondary), var(--primary)); /* secondary 는 tertiary 칩 위에서 대비 3.6:1 */
   font-size: 12px;
   text-align: center;
 }
@@ -59,6 +62,7 @@
   text-align: center;
   background: var(--tertiary);
   color: var(--secondary);
+  color: color-mix(in srgb, var(--secondary), var(--primary)); /* secondary 는 tertiary 칩 위에서 대비 3.6:1 */
 }
 .wiki-kind-posts { background: var(--primary); color: var(--theme); }
 
@@ -115,7 +119,7 @@
   font-size: 14px;
   line-height: 1.55;
 }
-.wiki-alt { margin-left: .5rem; font-weight: 400; font-size: 12px; color: var(--secondary); opacity: .7; }
+.wiki-alt { margin-left: .5rem; font-weight: 400; font-size: 12px; color: var(--secondary); }
 
 /* ── 아직 없는 문서 ─────────────────────────────────────── */
 .wiki-wanted { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--tertiary); }
@@ -130,7 +134,7 @@
 }
 .wiki-wanted-list li:target { background: color-mix(in srgb, #c0392b 12%, transparent); }
 .wiki-wanted-key { color: #c0392b; }
-.dark .wiki-wanted-key { color: #ff7b6b; }
+[data-theme="dark"] .wiki-wanted-key { color: #ff7b6b; }
 .wiki-wanted-new {
   margin-left: .5rem;
   font-size: 12px;
