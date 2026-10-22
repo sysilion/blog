@@ -18,7 +18,7 @@ hint: Updates were rejected because the tip of your current branch is behind
 
 ## 원인
 
-[[github-actions]] 의 재실행은 **처음 실행 때의 `GITHUB_SHA`** 를 그대로 쓴다. 첫 실행이 이미 커밋 하나를 push 해둔 상태라
+[[github-actions]] 의 재실행은 처음 실행 때의 `GITHUB_SHA` 를 그대로 쓴다. 첫 실행이 이미 커밋 하나를 push 해둔 상태라
 main 은 앞으로 가 있었고, 재실행은 그보다 뒤처진 커밋 위에서 새 커밋을 만들어 push 하려 했다.
 
 ## 재현
@@ -38,4 +38,4 @@ gh workflow run update-data.yml        # 최신 main 을 체크아웃한다
 
 ## 한 줄
 
-rerun 은 "같은 커밋으로 다시"이지 "지금 상태로 다시"가 아니다.
+main 에 자동 커밋하는 워크플로우가 실패하면 `gh run rerun` 대신 `gh workflow run` 으로 새로 돌린다.

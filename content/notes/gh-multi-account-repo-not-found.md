@@ -3,7 +3,7 @@ title: "gh 다중 계정에서 private 저장소가 'Repository not found'로 �
 date: 2026-09-02T11:00:00+09:00
 draft: false
 tags: ["git", "github", "gh-cli"]
-summary: "권한 없는 계정이 활성 상태일 때 GitHub는 404를 준다. 인증 오류가 아니라 저장소가 없다고 나온다."
+summary: "권한 없는 계정이 활성 상태면 GitHub는 404를 줘서, 인증 오류 대신 저장소가 없다고 나온다."
 aliases: ["/wiki/gh-multi-account-repo-not-found/"]
 ---
 
@@ -33,7 +33,7 @@ github.com
 git이 HTTPS 인증에 `gh` credential helper를 쓰기 때문에, 활성 계정 토큰이 그대로 전달된다.
 회사 계정에는 개인 private 저장소 권한이 없다.
 
-핵심은 GitHub가 이때 **403이 아니라 404를 준다**는 점이다. private 저장소의 존재 여부 자체를 숨기려는 의도적 동작이라, "권한 없음"이 아니라 "그런 저장소 없음"으로 보인다. 성공한 세 개는 전부 public 저장소였다.
+GitHub는 이때 403 대신 404를 준다. private 저장소가 있는지조차 숨기려는 의도적 동작이라 "권한 없음"이 "그런 저장소 없음"으로 보인다. 성공한 세 개는 전부 public 저장소였다.
 
 ## 재현
 
@@ -67,4 +67,4 @@ gh auth switch -u sysilion
 
 ## 한 줄
 
-**`gh` 다중 계정 환경에서 private 저장소의 `Repository not found` 는 저장소가 없다는 뜻이 아니라 지금 활성 계정에 권한이 없다는 뜻이다.**
+`gh` 다중 계정 환경에서 private 저장소가 `Repository not found` 로 뜨면 `gh auth status` 로 활성 계정부터 확인한다.

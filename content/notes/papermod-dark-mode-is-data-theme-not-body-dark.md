@@ -30,8 +30,8 @@ grep -n 'data-theme="dark"' themes/PaperMod/assets/css/core/theme-vars.css
 ## 그래서
 
 다크 규칙의 선택자를 `[data-theme="dark"] ...` 로 바꿨다. 빨간 링크 대비 3.07 → 6.59:1.
-JS가 꺼져 있으면 `data-theme` 이 `auto` 로 남아 여전히 라이트 색이다 — 테마 쪽 한계라 두었다.
+JS가 꺼져 있으면 `data-theme` 이 `auto` 로 남아 여전히 라이트 색이다. 테마 쪽 한계라 그대로 두었다.
 
 ## 한 줄
 
-> 테마의 다크 모드 스위치가 무엇을 바꾸는지 먼저 grep 하라. 틀린 선택자는 조용히 죽는다.
+> 테마 위에 다크 모드 CSS를 얹기 전에 테마의 다크 모드 스위치가 어떤 요소의 어떤 속성을 바꾸는지 grep 해 본다.

@@ -11,8 +11,8 @@ altnames: ["Web Crypto API", "crypto.subtle", "SubtleCrypto"]
 
 ## 무엇인가
 
-- `crypto.getRandomValues()` — 난수. 동기 함수다.
-- `crypto.subtle` — 나머지 전부. **모두 Promise 를 반환한다.**
+- `crypto.getRandomValues()`: 난수. 동기 함수다.
+- `crypto.subtle`: 나머지 전부. 모두 Promise 를 반환한다.
   `importKey` · `deriveKey` · `encrypt` · `decrypt` · `sign` · `verify` · `digest`.
 
 ```js
@@ -24,9 +24,9 @@ const out = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, aesKey, ciphert
 
 ## 알아둘 것
 
-- **[[secure-context]] 에서만 존재한다.** `https` 와 `localhost` 는 되고, 평문 `http` 나
+- [[secure-context]] 에서만 존재한다. `https` 와 `localhost` 는 되고, 평문 `http` 나
   LAN IP(`192.168.x.x`) 로 열면 `crypto.subtle` 이 `undefined` 다. 기능 탐지를 해두는 게 좋다.
 - 이름이 "subtle" 인 건 경고다. 잘못 쓰기 쉬운 저수준 API 라는 뜻으로 붙었다.
 - 키에 `extractable: false` 를 주면 JS 로 원본 바이트를 꺼낼 수 없다. 기본적으로 꺼두는 게 낫다.
 - 지원하는 [[pbkdf2]] 는 있지만 Argon2 는 없다. AES-CBC·CTR·[[aes-gcm]], RSA, ECDSA, HKDF 등을 지원한다.
-- 브라우저에서 도는 이상 **페이지를 내려주는 서버를 신뢰한다는 전제**가 깔린다. 스크립트가 바뀌면 끝이다.
+- 브라우저에서 도는 이상 페이지를 내려주는 서버를 신뢰한다는 전제가 깔린다. 스크립트가 바뀌면 끝이다.

@@ -19,7 +19,7 @@ BJS - Error: VERTEX SHADER ERROR: 0:49: '<' : syntax error
 
 ## 원인
 
-Babylon은 셰이더를 `#include<helperFunctions>` 같은 지시문으로 조립하고, 각 include는 `ShadersInclude/*.js`가 **import 사이드이펙트로** 전역 스토어에 등록한다. Vite의 [[vite-optimizedeps|optimizeDeps]]는 `@babylonjs/core/Meshes/meshBuilder` 같은 깊은 경로들을 각각 진입점으로 삼아 esbuild로 다시 묶는데, 이때 등록 모듈이 다른 청크로 갈리거나 중복돼 실제 셰이더 조립 시점에 스토어가 비어 있다. 치환되지 않은 `#include<...>`가 GLSL 컴파일러에 넘어가 `<`에서 문법 오류가 난다.
+Babylon은 셰이더를 `#include<helperFunctions>` 같은 지시문으로 조립하고, 각 include는 `ShadersInclude/*.js`가 import 사이드이펙트로 전역 스토어에 등록한다. Vite의 [[vite-optimizedeps|optimizeDeps]]는 `@babylonjs/core/Meshes/meshBuilder` 같은 깊은 경로들을 각각 진입점으로 삼아 esbuild로 다시 묶는데, 이때 등록 모듈이 다른 청크로 갈리거나 중복돼 실제 셰이더 조립 시점에 스토어가 비어 있다. 치환되지 않은 `#include<...>`가 GLSL 컴파일러에 넘어가 `<`에서 문법 오류가 난다.
 
 ## 재현
 
@@ -40,4 +40,4 @@ export default defineConfig({ optimizeDeps: { exclude: ["@babylonjs/core", "@bab
 
 ## 한 줄
 
-Babylon + Vite에서 `'<' : syntax error`는 GLSL 문제가 아니라 사전 번들링이 include 등록을 잃은 것이다.
+Babylon + Vite에서 `'<' : syntax error`가 나면 셰이더를 고치기 전에 `@babylonjs/core` 를 `optimizeDeps.exclude` 에 넣고 `node_modules/.vite` 를 지워 본다.

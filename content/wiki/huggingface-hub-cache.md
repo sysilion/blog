@@ -7,7 +7,7 @@ summary: "huggingface_hub가 모델을 내려받아 두는 ~/.cache/huggingface/
 altnames: ["HF cache", "huggingface cache", "HF_HOME"]
 ---
 
-**Hugging Face Hub 캐시**는 `huggingface_hub` 가 저장소 파일을 내려받아 두는 로컬 디렉터리다.
+Hugging Face Hub 캐시는 `huggingface_hub` 가 저장소 파일을 내려받아 두는 로컬 디렉터리다.
 기본 위치는 `~/.cache/huggingface/hub`, `HF_HOME` 이나 `HF_HUB_CACHE` 로 옮길 수 있다.
 
 ## 구조

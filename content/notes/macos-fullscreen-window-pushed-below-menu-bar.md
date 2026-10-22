@@ -28,7 +28,7 @@ macOS는 일반 창(`NSWindow`의 기본 레벨)을 메뉴 막대 영역에 올�
 
 ## 그래서
 
-frame이 아니라 **[[work-area|작업 영역]]** 에 맞춘다. 메뉴 막대와 독을 뺀 영역이다.
+frame 대신 [[work-area|작업 영역]] 에 맞춘다. 메뉴 막대와 독을 뺀 영역이다.
 
 ```rust
 let area = monitor.work_area();     // tauri v2: Monitor::work_area()
@@ -48,4 +48,4 @@ Tauri의 `always_on_top`은 그보다 낮은 floating 레벨을 쓴다.
 
 ## 한 줄
 
-macOS에서 "화면 전체를 덮는 창"은 `monitor.size()`가 아니라 `monitor.work_area()`다.
+macOS에서 화면 전체를 덮는 창은 `monitor.size()` 대신 `monitor.work_area()` 로 잡는다.

@@ -17,7 +17,7 @@ SIGTERM 은 프로세스에 "정리하고 끝내라" 고 요청하는 유닉스 
 
 ## 알아둘 것
 
-- **파이썬은 SIGTERM 을 예외로 바꾸지 않는다.** SIGINT(Ctrl-C)는 `KeyboardInterrupt` 가
+- 파이썬은 SIGTERM 을 예외로 바꾸지 않는다. SIGINT(Ctrl-C)는 `KeyboardInterrupt` 가
   되어 `finally`·`with` 의 정리 코드가 돌지만, SIGTERM 은 핸들러가 없으면 그것들을
   건너뛰고 죽는다.
 - 정리가 필요하면 `signal.signal(signal.SIGTERM, handler)` 로 핸들러를 걸고, 그 안에서

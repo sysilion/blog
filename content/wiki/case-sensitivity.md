@@ -20,7 +20,7 @@ altnames: ["case sensitivity", "case-insensitive", "case-preserving"]
 
 ## 알아둘 것
 
-세 계층이 어긋나기 때문에 **로컬 macOS에서 통과한 import가 Linux CI에서만 깨진다.**
+세 계층이 어긋나기 때문에 로컬 macOS에서 통과한 import가 Linux CI에서만 깨진다.
 `import './Button'` 인데 실제 파일이 `button.tsx` 인 경우가 전형이다.
 
 Git은 이 불일치를 `core.ignorecase` 로 흡수한다. macOS에서 `git init` 하면 자동으로 `true` 가 된다.

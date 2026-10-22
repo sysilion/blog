@@ -18,7 +18,7 @@ chicle은 VOD 채팅에서 `messageTypeCode == 10` 만 후원으로 세고 나�
 | 12 | 구독권 선물 | `giftType: SUBSCRIPTION_GIFT`, `quantity`, `giftTierName` | 2 |
 | 30 | 시스템 메시지 ("이모티콘 모드 OFF") | `description`, `styleType` | 1 |
 
-- `VIDEO` 후원의 `content` 는 후원 문구가 아니라 **영상 제목**이다.
+- `VIDEO` 후원의 `content` 에는 후원 문구 대신 영상 제목이 들어 있다.
 - `MISSION` 후원은 `status: PENDING`, `success: false` 상태로도 `payAmount` 가 찍힌다. 미션에 실패하면 환불될 수 있는 돈이다.
 - 11·12 에는 금액 필드가 없다. 12는 `content` 가 빈 문자열이다.
 
@@ -43,4 +43,6 @@ for c in json.load(sys.stdin)['content']['videoChats']:
 - 구독(11·12)은 금액을 알 수 없다. 후원 합계에 넣지 말고 건수만 따로 센다.
 - 대기실 채팅(음수 시각)은 세 VOD 모두 0건이었다. 시작 전 후원이 버려지는 문제는 적어도 이 표본에서는 없다.
 
-**한 줄:** 코드가 10이 아니라고 해서 다 일반 채팅은 아니다.
+## 한 줄
+
+비공개 API의 코드값으로 분류할 때는 먼저 전체 데이터의 코드 분포를 뽑아 보고, 모르는 코드는 하나씩 실제 메시지를 열어 확인한다.

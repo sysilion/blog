@@ -24,9 +24,9 @@ aliases: ["/wiki/papermod-search-index-scratch-duplicate/"]
 {{- $.Scratch.Get "index" | jsonify -}}
 ```
 
-`Scratch` 는 **페이지에 붙어 살아남는다.** `hugo server` 의 증분 리빌드는 페이지 객체를 재사용하므로
+`Scratch` 는 페이지에 붙어 살아남는다. `hugo server` 의 증분 리빌드는 페이지 객체를 재사용하므로
 템플릿이 다시 돌 때 이전 내용이 그대로 남아 있고, 거기에 한 벌이 더 얹힌다.
-첫 줄 `$.Scratch.Add "index" slice` 는 초기화가 아니라 **빈 슬라이스를 덧붙이는 것**이라 지워주지도 않는다.
+첫 줄 `$.Scratch.Add "index" slice` 도 초기화하지 않고 빈 슬라이스를 덧붙일 뿐이라 지워주지 않는다.
 
 ## 재현
 
@@ -43,7 +43,7 @@ $ curl -s localhost:1313/blog/index.json | jq length
 12                                      # 리빌드 6회 = 6배
 ```
 
-프로덕션 배포는 매번 새 프로세스가 1회 빌드하므로 **증상이 로컬에서만 보인다.**
+프로덕션 배포는 매번 새 프로세스가 1회 빌드하므로 증상이 로컬에서만 보인다.
 
 ## 그래서
 
@@ -63,4 +63,4 @@ $ curl -s localhost:1313/blog/index.json | jq length
 
 ## 한 줄
 
-> [[hugo]] 템플릿에서 누적이 필요하면 `.Scratch` 말고 `$x = $x | append`. `.Scratch` 의 수명은 빌드가 아니라 페이지다.
+> [[hugo]] 템플릿에서 값을 누적할 때는 `.Scratch` 대신 `$x = $x | append` 를 쓴다. `hugo server` 에서만 숫자가 불어나면 `.Scratch` 부터 의심한다.

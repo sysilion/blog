@@ -12,8 +12,8 @@ altnames: ["FFmpeg"]
 
 ## 알아둘 것
 
-**`Invalid data found when processing input` 은 데이터가 깨졌다는 뜻이 아닌 경우가 많다.**
-디먹서가 입력을 **열기를 거부**한 것이다. 대표적으로 [[hls]] 디먹서의 세그먼트 확장자 필터가 있다.
+`Invalid data found when processing input` 은 데이터가 깨졌다는 뜻이 아닌 경우가 많다.
+디먹서가 입력을 열기를 거부한 것이다. 대표적으로 [[hls]] 디먹서의 세그먼트 확장자 필터가 있다.
 
 ```bash
 ffmpeg -allowed_extensions ALL -extension_picky 0 -i playlist.m3u8 ...

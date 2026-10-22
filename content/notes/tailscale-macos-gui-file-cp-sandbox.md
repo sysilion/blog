@@ -33,4 +33,4 @@ tailscale file cp --name foo.ttf - bizu-desk: < ~/Library/Fonts/foo.ttf   # 성�
 
 ## 한 줄
 
-GUI판 Tailscale은 파일을 못 읽지만 stdin은 받는다.
+GUI판 Tailscale의 `file cp` 가 sandbox 에러를 내면 `--name` 을 주고 `-` 로 stdin에 파일을 흘려 넣는다.

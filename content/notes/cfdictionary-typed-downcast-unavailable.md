@@ -23,7 +23,7 @@ help: the trait `ConcreteCFType` is implemented for `CFDictionary`
 
 ## 원인
 
-[[core-foundation]] 크레이트에서 `ConcreteCFType`은 **원시 형태에만** 구현돼 있다.
+[[core-foundation]] 크레이트에서 `ConcreteCFType`은 원시 형태에만 구현돼 있다.
 
 ```rust
 // core-foundation/src/dictionary.rs

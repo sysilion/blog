@@ -18,9 +18,9 @@ torch-2.14.1-cp314-cp314-macosx_14_0_arm64.whl
  이름  버전   Python ABI   플랫폼
 ```
 
-- **Python 태그** — `cp314` = CPython 3.14, `py3` = 순수 Python
-- **[[abi-tag|ABI 태그]]** — 확장 모듈이 링크되는 바이너리 인터페이스. `abi3` 는 여러 버전 공용
-- **플랫폼 태그** — `macosx_14_0_arm64`, `manylinux_2_28_x86_64`, `any`
+- Python 태그: `cp314` = CPython 3.14, `py3` = 순수 Python
+- [[abi-tag|ABI 태그]]: 확장 모듈이 링크되는 바이너리 인터페이스. `abi3` 는 여러 버전 공용
+- 플랫폼 태그: `macosx_14_0_arm64`, `manylinux_2_28_x86_64`, `any`
 
 ## 알아둘 것
 

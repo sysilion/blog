@@ -12,8 +12,8 @@ subculture-timeline 명조(wuwa) 행에 'Matrix Reform' 이벤트가 같은 기�
 
 ## 원인
 
-`scripts/update_data.py` 의 `merge_entries` 는 수동 항목을 만나면 **새로 파싱한(fresh)** 자동 항목에서만 같은 키를 pop 했다.
-수동 항목이 추가되기 **전에** 이미 games.json 에 저장돼 있던 자동 항목은 "기존 자동 항목" 경로를 타서 90일 이내면 그대로 유지됐다. [[멱등성|idempotent]] 하게 설계됐지만 시간 순서에 따라 결과가 달라진 것.
+`scripts/update_data.py` 의 `merge_entries` 는 수동 항목을 만나면 새로 파싱한(fresh) 자동 항목에서만 같은 키를 pop 했다.
+수동 항목이 추가되기 전에 이미 games.json 에 저장돼 있던 자동 항목은 "기존 자동 항목" 경로를 타서 90일 이내면 그대로 유지됐다. [[멱등성|idempotent]] 하게 설계됐지만 시간 순서에 따라 결과가 달라진 것.
 
 ## 재현
 
@@ -31,4 +31,4 @@ for g in d['games']:
 
 ## 한 줄
 
-병합 dedupe 는 "새로 들어오는 쪽"만이 아니라 "이미 있는 쪽"에도 같은 규칙을 적용해야 순서 독립적이다.
+병합 dedupe 규칙은 새로 들어오는 쪽과 이미 저장된 쪽에 똑같이 건다. 그래야 실행 순서가 달라도 결과가 같다.

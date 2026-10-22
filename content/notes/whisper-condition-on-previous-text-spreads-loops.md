@@ -31,7 +31,7 @@ mlx_whisper.transcribe(audio, path_or_hf_repo="mlx-community/whisper-large-v3-tu
 | --- | --- | --- | --- |
 | 기본값 | 119초 | 185 | `와` 6회 |
 | `condition_on_previous_text=False` | 45초 | 171 | 2회 |
-| `temperature=0.0` (fallback 끔) | 54초 | 463 | **`와` 404회** |
+| `temperature=0.0` (fallback 끔) | 54초 | 463 | `와` 404회 |
 
 같은 프로세스 안에서 같은 설정으로 두 번 돌리면 결과 해시가 같았다.
 
@@ -41,4 +41,6 @@ mlx_whisper.transcribe(audio, path_or_hf_repo="mlx-community/whisper-large-v3-tu
 가장 많이 반복된 줄은 `아..` 10회였다. fallback을 끄는 건 오히려 해롭다. 반복을 끊어 주던 장치가 사라져
 `와` 가 404번 찍혔다.
 
-**한 줄:** 긴 방송 전사에서는 앞 문맥 전달부터 끈다. temperature fallback은 끄지 않는다.
+## 한 줄
+
+긴 방송 전사에서는 앞 문맥 전달부터 끈다. temperature fallback은 끄지 않는다.

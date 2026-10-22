@@ -22,8 +22,8 @@ TypeError: Cannot set property default of [object Module] which has only a gette
 
 ## 원인
 
-[[vite|Vite]] 의 SSR 변환이 **소스 파일 안의 `module.exports = X` 를 자기 내보내기 객체
-대입으로 고쳐 쓴다.** 대략 이렇게 된다.
+[[vite|Vite]] 의 SSR 변환이 소스 파일 안의 `module.exports = X` 를 자기 내보내기 객체
+대입으로 고쳐 쓴다. 대략 이렇게 된다.
 
 ```js
 // 내가 쓴 것
@@ -33,12 +33,12 @@ module.exports = factory();
 __vite_ssr_exports__.default = factory();
 ```
 
-`__vite_ssr_exports__` 는 ES 모듈 네임스페이스라 **getter만 있고 쓸 수 없다.**
-그래서 "Cannot set property **default**" 다 — 에러 메시지에 `default` 가 나오는 이유가
-여기 있다. 내가 쓴 코드에는 `default` 라는 단어가 없다.
+`__vite_ssr_exports__` 는 ES 모듈 네임스페이스라 getter만 있고 쓸 수 없다.
+내가 쓴 코드에는 `default` 라는 단어가 없는데 에러 메시지에 "Cannot set property default" 가
+나온 건 이 때문이다.
 
 `node_modules` 안의 CommonJS는 `@rollup/plugin-commonjs` 가 제대로 변환한다.
-문제는 **소스 트리에 직접 넣은** UMD 파일이다. 그건 ESM으로 간주되면서 이 어중간한
+소스 트리에 직접 넣은 UMD 파일은 ESM으로 간주되면서 이 어중간한
 재작성만 걸린다.
 
 ## 재현
@@ -63,7 +63,7 @@ test('loads', () => { expect(self.Thing.hello()).toBe('hi'); });
 
 ## 그래서
 
-UMD 래퍼에서 **CommonJS 분기를 지우고 전역 경로만 남겼다.** 한 줄이면 끝난다.
+UMD 래퍼에서 CommonJS 분기를 지우고 전역 경로만 남겼다. 한 줄이면 끝난다.
 
 ```js
 (function (root, factory) {
@@ -82,10 +82,9 @@ if (typeof self === "undefined") globalThis.self = globalThis;
 export default self.Thing;
 ```
 
-`var module;` 로 가려 보려 했는데 소용없다. Vite가 **토큰을 보고 변환**하므로 런타임에
+`var module;` 로 가려 보려 했는데 소용없다. Vite가 토큰을 보고 변환하므로 런타임에
 무엇이 있든 상관이 없다.
 
 ## 한 줄
 
-Vite에서 소스 트리의 UMD는 CommonJS 분기를 지우고 써라. 남겨 두면 번들러가 고쳐 쓰고
-그 대상은 읽기 전용이다.
+UMD 파일을 Vite 소스 트리에 넣을 땐 CommonJS 분기부터 지우고, 모듈로도 쓰려면 끝에 `export default` 를 붙인다.

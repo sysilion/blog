@@ -7,7 +7,7 @@ summary: "텍스트/이미지 → 게임 엔진에서 바로 쓰는 텍스처 �
 altnames: []
 ---
 
-텍스트나 이미지 한 장에서 탐색 가능한 3D 씬을 텍스처 메시로 생성하는 오픈소스 파이프라인(ZiYang-xie/WorldGen). 출력이 NeRF나 3DGS가 아니라 **표준 메시** 라서 Unity·Unreal·Blender에 그대로 들어간다.
+텍스트나 이미지 한 장에서 탐색 가능한 3D 씬을 텍스처 메시로 생성하는 오픈소스 파이프라인(ZiYang-xie/WorldGen). 출력이 NeRF나 3DGS가 아니라 표준 메시라서 Unity·Unreal·Blender에 그대로 들어간다.
 
 ## 구조
 

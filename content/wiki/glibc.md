@@ -7,13 +7,13 @@ summary: "GNU C 라이브러리. 대부분의 Linux 배포판이 쓰는 표준 C
 altnames: ["GNU C Library", "libc6"]
 ---
 
-**glibc**(GNU C Library)는 GNU 프로젝트의 C 표준 라이브러리 구현이다. Debian·Ubuntu·RHEL 계열 등 대부분의 Linux 배포판이 쓴다.
+glibc(GNU C Library)는 GNU 프로젝트의 C 표준 라이브러리 구현이다. Debian·Ubuntu·RHEL 계열 등 대부분의 Linux 배포판이 쓴다.
 
 ## 무엇인가
 
 - `printf`, `malloc` 같은 C 표준 함수와 POSIX API, 시스템 콜 래퍼, 동적 링커(`ld-linux*.so`)를 제공한다.
 - 거의 모든 동적 링크 바이너리가 여기에 의존한다.
-- 심볼에 버전이 붙는다(`GLIBC_2.28` 등). 바이너리는 **빌드한 환경의 glibc보다 낮은 glibc에서는 돌지 않는다.** 반대로 높은 쪽에서는 돈다(하위 호환).
+- 심볼에 버전이 붙는다(`GLIBC_2.28` 등). 바이너리는 빌드한 환경의 glibc보다 낮은 glibc에서는 돌지 않는다. 반대로 높은 쪽에서는 돈다(하위 호환).
 
 ## 알아둘 것
 

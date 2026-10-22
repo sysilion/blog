@@ -15,7 +15,7 @@ summary: "파일 이력을 오래된 순으로 훑으려고 --follow 와 --rever
 git log --reverse --follow --date=short --format='%H %ad' -- data/map_data.json
 ```
 
-29개 커밋이 나와야 하는데 **1개만** 나왔다. 그 1개는 가장 오래된 커밋이라 "다 나온 것처럼" 보이기도 해서
+29개 커밋이 나와야 하는데 1개만 나왔다. 그 1개는 가장 오래된 커밋이라 "다 나온 것처럼" 보이기도 해서
 한참 뒤에야 이상하다는 걸 알았다.
 
 ## 원인
@@ -46,7 +46,7 @@ $ git log --reverse --format='%h' -- data/map_data.json | wc -l
 
 ## 그래서
 
-`--follow` 로 최신순 목록을 받아 **호출하는 쪽에서 뒤집는다.**
+`--follow` 로 최신순 목록을 받아 호출하는 쪽에서 뒤집는다.
 
 ```python
 rows = git("log", "--follow", "--date=short", "--format=%H\t%ad", "--", path).splitlines()

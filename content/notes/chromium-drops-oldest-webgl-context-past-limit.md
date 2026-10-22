@@ -13,7 +13,7 @@ GPU 자원은 풀리지만 [[webgl-context]] 자체는 GC 가 수거할 때까�
 
 ## 원인
 
-Chromium 은 한 페이지에 살아 있는 WebGL 컨텍스트 수에 상한(16개 안팎)을 두고, 넘으면 **가장 오래된 컨텍스트를 강제로 lost** 시킨다.
+Chromium 은 한 페이지에 살아 있는 WebGL 컨텍스트 수에 상한(16개 안팎)을 두고, 넘으면 가장 오래된 컨텍스트를 강제로 lost 시킨다.
 dispose 했지만 아직 수거되지 않은 컨텍스트도 개수에 들어간다. 순서가 꼬이면 지금 쓰는 컨텍스트가 먼저 꺼진다.
 
 ## 재현
@@ -33,4 +33,4 @@ three 렌더러는 `dispose()` 뒤에 `forceContextLoss()`, 직접 만든 컨텍
 
 ## 한 줄
 
-> WebGL 은 dispose 로 끝나지 않는다. 컨텍스트를 명시적으로 잃게 해야 개수가 준다.
+> WebGL 렌더러를 치울 땐 dispose 뒤에 `forceContextLoss()` 나 `loseContext()` 까지 불러 컨텍스트를 직접 반납한다.

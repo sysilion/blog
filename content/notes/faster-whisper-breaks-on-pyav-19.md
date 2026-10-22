@@ -9,7 +9,7 @@ summary: "PyAV 19가 av.open()의 metadata_errors 인자를 없앴는데 faster-
 ## 무슨 일이
 
 chicle에서 하이라이트 구간 전사를 켜려고 [[faster-whisper]] 를 새로 설치했다. 구간 3개가
-**전부** 실패했다. 그런데 분석 작업은 정상 완료로 끝났다. 구간별 실패를 경고 로그로만 남기고
+전부 실패했다. 그런데 분석 작업은 정상 완료로 끝났다. 구간별 실패를 경고 로그로만 남기고
 넘어가는 구조라, UI에서는 "말소리가 없는 구간"처럼 보였다.
 
 ```
@@ -33,7 +33,7 @@ python -c "from faster_whisper.audio import decode_audio; decode_audio('s.wav')"
 
 ## 그래서
 
-`WhisperModel.transcribe()` 는 경로 말고 **16kHz float32 배열**도 받는다. 배열을 넘기면 PyAV를
+`WhisperModel.transcribe()` 는 경로 말고 16kHz float32 배열도 받는다. 배열을 넘기면 PyAV를
 아예 거치지 않는다. 입력은 이미 [[ffmpeg]] 로 16kHz mono s16le WAV로 잘라 뒀으니, 표준 라이브러리
 `wave` 로 읽기만 하면 된다.
 
@@ -50,4 +50,4 @@ model.transcribe(audio, language="ko", vad_filter=True)
 
 ## 한 줄
 
-> 하한만 걸린 의존성은 새로 설치할 때 깨진다. 실패를 삼키는 루프는 "전부 실패"를 "결과 없음"으로 바꿔 보여준다.
+> 새로 설치한 라이브러리가 "결과 없음"만 내놓으면 실패를 삼키는 루프의 경고 로그부터 본다. 하한만 걸린 의존성(`av>=11`)은 새로 설치할 때 최신 메이저가 깔려 깨질 수 있다.

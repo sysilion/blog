@@ -11,9 +11,9 @@ XML의 계층 구조를 이진으로 옮긴 범용 컨테이너 문법. 2002년 
 
 ## 무엇인가
 
-XML이 `<tag>값</tag>` 을 텍스트로 중첩하듯, EBML은 **ID · 크기 · 값** 세 덩어리를 이진으로 중첩한다. 태그 이름 대신 숫자 ID를 쓰고, 닫는 태그 대신 길이를 앞에 둔다. 파서는 ID를 모르는 요소를 만나면 크기만큼 건너뛰면 되므로 **앞뒤 호환이 쉽다.**
+XML이 `<tag>값</tag>` 을 텍스트로 중첩하듯, EBML은 **ID · 크기 · 값** 세 덩어리를 이진으로 중첩한다. 태그 이름 대신 숫자 ID를 쓰고, 닫는 태그 대신 길이를 앞에 둔다. 파서는 ID를 모르는 요소를 만나면 크기만큼 건너뛰면 되므로 앞뒤 호환이 쉽다.
 
-어떤 ID가 무슨 뜻인지는 EBML 자체가 아니라 **DocType**(matroska, webm 등)이 정한다. EBML은 문법이고, Matroska는 그 문법으로 쓴 스키마다.
+어떤 ID가 무슨 뜻인지는 **DocType**(matroska, webm 등)이 정한다. EBML은 문법이고, Matroska는 그 문법으로 쓴 스키마다.
 
 ## 구조
 
@@ -25,7 +25,7 @@ XML이 `<tag>값</tag>` 을 텍스트로 중첩하듯, EBML은 **ID · 크기 ·
 | 크기 | VINT, 마커 비트 제외 | 뒤따르는 값의 바이트 수. 최대 8바이트 |
 | 값 | 크기만큼 | 아래 타입 중 하나 |
 
-값 타입은 일곱 가지다 — **Master**(자식 요소들의 나열), Unsigned/Signed Integer, Float, String(ASCII), UTF-8, Date, Binary. 트리를 만드는 건 Master 하나다.
+값 타입은 일곱 가지다. Master(자식 요소들의 나열), Unsigned/Signed Integer, Float, String(ASCII), UTF-8, Date, Binary. 트리를 만드는 건 Master 하나다.
 
 ### VINT (variable-length integer)
 
@@ -64,8 +64,8 @@ for (let i = 1; i < len; i++) size = size * 256 + buf[offset + i];
 
 ## 알아둘 것
 
-- **크기 미정(unknown size).** 크기 VINT의 데이터 비트가 전부 1이면(`0xFF`, `0x01FFFFFFFFFFFFFF` 등) 길이를 모른다는 뜻이다. Master 요소만 가능하다. 라이브 인코더가 Segment·Cluster에 쓴다 — 끝을 아직 모르니까. 파서는 자식을 읽어가다 **같은 레벨 이상의 ID** 가 나오면 요소가 끝났다고 판단해야 한다.
-- **모든 비트가 1인 ID는 예약** 이다. `0xFF`, `0x7FFF` 같은 ID는 나올 수 없다.
-- **헤더 없이는 뒤쪽만으로 해석할 수 없다.** Cluster 안의 블록은 Tracks가 정한 코덱과 TimecodeScale을 전제한다. [[mediarecorder]] 출력을 중간에서 잘라 쓸 때 걸리는 지점이다.
-- **Cluster 경계 찾기는 파서 전체가 없어도 된다.** VINT 읽기 + ID 몇 개 + "Master면 안으로, 아니면 건너뛰기" 만 구현하면 충분하다.
-- 확인 도구 — `mkvinfo -v file.webm`(MKVToolNix)은 요소 트리를 그대로 덤프한다. `ffprobe -show_packets` 는 블록 단위로 keyframe 여부(`flags=K_`)를 보여준다.
+- **크기 미정(unknown size).** 크기 VINT의 데이터 비트가 전부 1이면(`0xFF`, `0x01FFFFFFFFFFFFFF` 등) 길이를 모른다는 뜻이다. Master 요소만 가능하다. 라이브 인코더가 Segment·Cluster에 쓴다. 끝을 아직 모르니까. 파서는 자식을 읽어가다 **같은 레벨 이상의 ID** 가 나오면 요소가 끝났다고 판단해야 한다.
+- 모든 비트가 1인 ID는 예약이다. `0xFF`, `0x7FFF` 같은 ID는 나올 수 없다.
+- 헤더 없이는 뒤쪽만으로 해석할 수 없다. Cluster 안의 블록은 Tracks가 정한 코덱과 TimecodeScale을 전제한다. [[mediarecorder]] 출력을 중간에서 잘라 쓸 때 걸리는 지점이다.
+- Cluster 경계 찾기에는 파서 전체가 필요 없다. VINT 읽기 + ID 몇 개 + "Master면 안으로, 아니면 건너뛰기" 만 구현하면 충분하다.
+- 확인 도구: `mkvinfo -v file.webm`(MKVToolNix)은 요소 트리를 그대로 덤프한다. `ffprobe -show_packets` 는 블록 단위로 keyframe 여부(`flags=K_`)를 보여준다.

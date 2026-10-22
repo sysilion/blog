@@ -24,9 +24,9 @@ altnames: ["window level", "NSWindowLevel", "창 레벨", "setLevel"]
 
 ## 알아둘 것
 
-"항상 위"라고 다 같은 위가 아니다. `NSFloatingWindowLevel`(3)은 메뉴 막대(24)보다 아래라,
+"항상 위"도 레벨이 갈린다. `NSFloatingWindowLevel`(3)은 메뉴 막대(24)보다 아래라,
 메뉴 막대를 직접 덮는 앱의 창에 가려진다.
 
-전체화면 스페이스 위에 뜨는 건 레벨과 **별개 문제**다. 그건 `collectionBehavior`의
+전체화면 스페이스 위에 뜨는 건 레벨과 별개 문제다. 그건 `collectionBehavior`의
 `fullScreenAuxiliary` 비트가 결정한다. 둘 다 필요하다.
 [[work-area|작업 영역]]에 맞춘 창이라면 레벨을 올려도 메뉴 막대를 시각적으로 덮지 않는다.

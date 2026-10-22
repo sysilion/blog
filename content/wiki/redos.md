@@ -12,7 +12,7 @@ altnames: ["redos", "Regular expression Denial of Service", "정규식 DoS", "�
 
 ## 무엇인가
 
-백트래킹 엔진은 **같은 문자열을 여러 갈래로 나눠 읽을 수 있는 패턴**을 만나면
+백트래킹 엔진은 같은 문자열을 여러 갈래로 나눠 읽을 수 있는 패턴을 만나면
 매치에 실패할 때마다 다른 갈래로 되돌아가 다시 시도한다. 갈래가 겹쳐 있으면
 그 경우의 수가 입력 길이에 대해 지수로 늘어난다.
 
@@ -25,14 +25,14 @@ altnames: ["redos", "Regular expression Denial of Service", "정규식 DoS", "�
 중첩 수량자(`(x+)+`, `(x*)*`), `(a|a)*` 처럼 갈래가 같은 것을 읽는 교대, `.*` 의 연쇄가
 전형적인 형태다.
 
-Perl 계열 엔진 — PCRE, Java `Pattern`, JavaScript, Python `re`, .NET — 이 전부 백트래킹이다.
+PCRE, Java `Pattern`, JavaScript, Python `re`, .NET 같은 Perl 계열 엔진은 전부 백트래킹이다.
 
 ## 알아둘 것
 
-- **오토마타 기반 엔진은 구조적으로 면역이다.** RE2, Go `regexp`, Rust [[regex-crate]] 는
-  입력 길이에 선형인 시간을 보장한다. 대가로 역참조와 룩어라운드를 포기했다 —
+- 오토마타 기반 엔진은 구조적으로 면역이다. RE2, Go `regexp`, Rust [[regex-crate]] 는
+  입력 길이에 선형인 시간을 보장한다. 대가로 역참조와 룩어라운드를 포기했다.
   그 두 기능이 백트래킹을 필요로 하기 때문이다.
-- 가장 위험한 것은 **사용자 입력을 패턴으로 받는** 코드다. 입력이 매치 대상인 경우보다
+- 가장 위험한 것은 사용자 입력을 패턴으로 받는 코드다. 입력이 매치 대상인 경우보다
   훨씬 직접적이다.
 - 백트래킹 엔진을 계속 써야 한다면 매치 대상 길이를 제한하고, 타임아웃이 있는 API를 쓴다.
   .NET `Regex` 는 생성자에 `matchTimeout` 을 받지만, Java `Pattern` 과 JavaScript `RegExp` 에는

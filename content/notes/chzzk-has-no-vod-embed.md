@@ -9,7 +9,7 @@ summary: "임베드 주소가 200으로 오류 화면을 줘서 iframe onError�
 ## 무슨 일이
 
 chicle의 영상 패널이 `https://chzzk.naver.com/embed/video/{no}`를 iframe으로 띄우고 있었는데,
-재생이 안 됐다. iframe 안에는 치지직 사이트 전체와 **"존재하지 않는 채널입니다"**가 떴다.
+재생이 안 됐다. iframe 안에는 치지직 사이트 전체와 "존재하지 않는 채널입니다"가 떴다.
 막혔을 때 보여주려던 대체 화면도 나오지 않았다.
 
 ## 원인
@@ -44,4 +44,4 @@ curl -sI https://chzzk.naver.com/embed/video/15088168 | grep -ic frame-ancestors
 
 ## 한 줄
 
-> 200 응답의 오류 페이지는 iframe에서 실패로 보이지 않는다. 임베드는 응답 코드가 아니라 화면을 확인한다.
+> 임베드 주소를 쓰기 전에 그 주소를 직접 열어 화면을 본다. iframe `onError` 가 안 뜬다고 성공한 게 아니다.

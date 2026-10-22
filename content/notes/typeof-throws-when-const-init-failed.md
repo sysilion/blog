@@ -14,7 +14,7 @@ subculture-timeline 은 `typeof I18n !== 'undefined'` 로 번역 모듈이 없�
 ## 원인
 
 `i18n.js` 맨 위의 `localStorage.getItem` 이 예외를 던져 `const I18n = (() => {...})()` 의 초기화가 실패했다.
-최상위 `const` 는 스크립트들이 공유하는 선언 영역에 **이름만 등록된 채** 초기화되지 않은 상태, 즉 [[tdz]] 로 남는다.
+최상위 `const` 는 스크립트들이 공유하는 선언 영역에 이름만 등록된 채 초기화되지 않은 상태, 즉 [[tdz]] 로 남는다.
 이 상태의 이름에는 `typeof` 도 ReferenceError 다. "선언 안 된 이름이면 'undefined'" 라는 typeof 의 안전장치는 여기서 통하지 않는다.
 
 ## 재현
@@ -35,4 +35,4 @@ chrome-headless-shell --headless --dump-dom file:///.../tdz.html | grep -o '<tit
 
 ## 한 줄
 
-> 다른 스크립트의 const 가 초기화에 실패하면 그 이름은 typeof 로도 못 건드린다.
+> 최상위 const 초기화에서 예외가 날 수 있는 코드(`localStorage` 등)는 그 자리에서 try/catch 로 감싼다. 쓰는 쪽의 `typeof` 가드로는 못 막는다.

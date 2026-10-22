@@ -29,4 +29,4 @@ cd streaming && node -e "import('ws').then(({WebSocketServer,default:WebSocket})
 
 ## 한 줄
 
-> ws 의 send 는 닫힌 소켓에서 조용하다. 보내기 전에 readyState 를 본다.
+> ws 로 보내기 전에 `readyState` 가 OPEN 인지 확인하고, 예외가 안 난다고 전송이 된 걸로 치지 않는다.

@@ -35,4 +35,6 @@ echo hi | gpg --symmetric -o /tmp/x.gpg   # Inappropriate ioctl for device, exit
 - 스크립트에는 `export GPG_TTY="$(tty)"`를 넣는다. 일반 터미널에서도 curses pinentry가 터미널을 찾지 못하는 경우를 막는다.
 - 한 번 입력한 passphrase는 gpg-agent에 캐시되므로, 그 뒤에는 TTY가 없어도 `--pinentry-mode error`로 복호화 검증을 할 수 있다.
 
-**한 줄:** gpg passphrase 입력은 pinentry 몫이고, pinentry는 TTY 없이는 뜨지 못한다.
+## 한 줄
+
+gpg가 `Inappropriate ioctl for device` 로 죽으면 TTY가 없는 셸이다. passphrase가 필요한 명령은 별도 터미널 창에서 돌린다.

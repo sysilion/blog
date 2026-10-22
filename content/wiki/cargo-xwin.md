@@ -7,7 +7,7 @@ summary: "리눅스·macOS에서 Windows MSVC 타깃으로 Rust를 빌드하게 
 altnames: ["xwin"]
 ---
 
-`x86_64-pc-windows-msvc` 타깃을 **윈도우 기계 없이** 빌드·검사하게 해 주는 cargo 하위 명령.
+`x86_64-pc-windows-msvc` 타깃을 윈도우 기계 없이 빌드·검사하게 해 주는 cargo 하위 명령.
 
 ## 무엇인가
 
@@ -33,5 +33,5 @@ XWIN_ACCEPT_LICENSE=1 cargo xwin build  --target x86_64-pc-windows-msvc --releas
   헤더와 임포트 라이브러리이고, 재배포 조건은 그 라이선스를 따른다.
 - SDK 캐시는 한 번 받으면 재사용된다(수백 MB).
 - `check` 는 링크를 하지 않아 가장 가볍고, 타입·시그니처·기능 플래그 문제를 거의 다 잡는다.
-- **컴파일 검증일 뿐 동작 검증이 아니다.** 그리고 `cfg` 로 갈린 파일이 실제로 컴파일
+- 확인되는 건 컴파일까지고, 동작은 검증하지 못한다. 또 `cfg` 로 갈린 파일이 실제로 컴파일
   대상인지는 일부러 오류를 심어 확인해야 한다.

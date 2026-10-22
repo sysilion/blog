@@ -19,7 +19,7 @@ altnames: ["secure context", "isSecureContext"]
 
 ## 알아둘 것
 
-**self-signed 인증서로 띄운 HTTPS는 보안 컨텍스트 조건을 통과하더라도 실무에서 막힌다.**
+self-signed 인증서로 띄운 HTTPS는 보안 컨텍스트 조건을 통과하더라도 실무에서 막힌다.
 브라우저가 인증서 경고를 띄우고, 그 상태에서는 서비스 워커 등록이 되지 않는다.
 
-localhost는 HTTP여도 보안 컨텍스트이므로, 로컬 검증은 **평문 HTTP 서버**로 띄우는 쪽이 빠르다.
+localhost는 HTTP여도 보안 컨텍스트이므로, 로컬 검증은 평문 HTTP 서버로 띄우는 쪽이 빠르다.

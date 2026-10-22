@@ -17,7 +17,7 @@ TAURI_SIGNING_PRIVATE_KEY_PASSWORD= \
 npm run tauri build
 ```
 
-번들은 다 만들어진다. `.app`, `.dmg`, `.app.tar.gz` 까지 나온다. 그리고 **맨 마지막에**
+번들은 다 만들어진다. `.app`, `.dmg`, `.app.tar.gz` 까지 나온다. 그리고 맨 마지막에
 실패한다.
 
 ```
@@ -36,11 +36,11 @@ Make sure to set `TAURI_SIGNING_PRIVATE_KEY` environment variable.
 - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`
 ```
 
-그런데 `_PATH` 는 `tauri signer sign` 하위 명령이 읽는 것이고, **`tauri build` 의 서명
-단계는 `TAURI_SIGNING_PRIVATE_KEY` 하나만 본다.** 안내문이 세 개를 함께 보여 주니
+그런데 `_PATH` 는 `tauri signer sign` 하위 명령이 읽는 것이고, `tauri build` 의 서명
+단계는 `TAURI_SIGNING_PRIVATE_KEY` 하나만 본다. 안내문이 세 개를 함께 보여 주니
 어느 명령의 것인지 구분이 안 된다.
 
-오류가 번들을 다 만든 **뒤에** 나오는 것도 헷갈린다. `.tar.gz` 까지 손에 쥐고 있는데
+오류가 번들을 다 만든 뒤에 나오는 것도 헷갈린다. `.tar.gz` 까지 손에 쥐고 있는데
 `.sig` 만 없다.
 
 ## 재현
@@ -64,7 +64,7 @@ npm run tauri build
 
 ## 그래서
 
-키 **내용**을 넣는다. 비밀번호 없이 만든 키라면 `..._PASSWORD` 를 빈 문자열로라도 주어야
+키 파일 경로 대신 키 내용을 넣는다. 비밀번호 없이 만든 키라면 `..._PASSWORD` 를 빈 문자열로라도 주어야
 프롬프트가 뜨지 않는다. CI라면 키 내용을 시크릿에 넣는 것이 어차피 자연스럽다.
 
 `.sig` 가 없으면 `latest.json` 의 `signature` 를 채울 수 없고, 업데이터는 서명이 맞는
@@ -72,4 +72,4 @@ npm run tauri build
 
 ## 한 줄
 
-빌드에 쓰는 건 `TAURI_SIGNING_PRIVATE_KEY` 하나다. `_PATH` 는 `signer sign` 전용이다.
+`tauri build` 로 서명할 때는 `TAURI_SIGNING_PRIVATE_KEY="$(cat ...)"` 로 키 내용을 넘긴다. `_PATH` 는 `signer sign` 에만 쓴다.

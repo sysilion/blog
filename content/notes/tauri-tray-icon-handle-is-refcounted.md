@@ -32,7 +32,7 @@ Tauri 소스의 `TrayIcon` 문서 주석에 한 줄로 적혀 있다.
 
 > This type is reference-counted and the icon is removed when the last instance is dropped.
 
-`build()`가 돌려주는 `TrayIcon`이 **아이콘의 수명 그 자체**다. `?` 뒤에 세미콜론을 찍는 순간
+`build()`가 돌려주는 `TrayIcon`의 수명이 곧 아이콘의 수명이다. `?` 뒤에 세미콜론을 찍는 순간
 핸들이 떨어지고, 아이콘도 같이 사라진다. 생성은 분명히 성공했으므로 `Ok`가 나오는 것도 맞다.
 
 ## 재현
@@ -65,7 +65,7 @@ pub struct TrayHandle(Mutex<Option<TrayIcon>>);
 
 ## 곁다리 — 아이콘이 안 보이는 다른 이유
 
-이번 건과 별개로, **모니터가 여러 대면 상태 항목이 다른 화면의 메뉴 막대에 붙는다.**
+이번 건과 별개로, 모니터가 여러 대면 상태 항목이 다른 화면의 메뉴 막대에 붙는다.
 주 화면만 캡처하면 없는 것처럼 보인다. 실제로 있는지는 접근성 API로 확인하는 게 확실하다.
 
 ```bash
@@ -76,4 +76,4 @@ osascript -e 'tell application "System Events" to tell process "deskmate" \
 
 ## 한 줄
 
-`build()`의 반환값을 버리지 마라. 그 핸들이 아이콘의 수명이다.
+트레이 아이콘이 안 보이면 `build()` 반환값을 어딘가에 붙잡아 뒀는지부터 보고, 모니터가 여러 대면 다른 화면의 메뉴 막대도 확인한다.

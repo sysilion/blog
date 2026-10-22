@@ -14,7 +14,7 @@ dealsignal 은 `application.yml` 에 `hibernate.jdbc.batch_size: 50`, `order_upd
 ## 원인
 
 순서 변경 코드가 id 마다 `findBy...` 로 엔티티를 읽고 값을 고쳤다. Hibernate 의 [[flush-mode]] 기본값 `AUTO` 는
-**쿼리를 실행하기 전에, 그 쿼리 결과에 영향을 줄 수 있는 밀린 변경을 먼저 flush** 한다.
+쿼리를 실행하기 전에, 그 쿼리 결과에 영향을 줄 수 있는 밀린 변경을 먼저 flush 한다.
 같은 테이블을 다시 조회하니 매 반복마다 직전 UPDATE 하나가 홀로 flush 되고, 배치로 묶일 기회가 없다.
 
 ## 재현
@@ -35,4 +35,4 @@ System.out.println(stats.getPrepareStatementCount());   // 전 20 → 후 2
 
 ## 한 줄
 
-> batch_size 는 조건이 아니라 상한이다. 수정 루프 안에서 같은 테이블을 조회하면 auto flush 가 배치를 쪼갠다.
+> batch_size 는 상한일 뿐이다. 고칠 엔티티는 루프 밖에서 한 번에 읽어 오고, 수정 루프 안에서는 같은 테이블을 조회하지 않는다.

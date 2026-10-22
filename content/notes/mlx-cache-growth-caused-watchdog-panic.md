@@ -9,7 +9,7 @@ summary: "mlx-whisper를 같은 프로세스에서 계속 돌리면 MLX 버퍼 �
 ## 무슨 일이
 
 새벽 2시 13분에 맥북(M1, 16GB)이 재부팅됐다. `last reboot` 기록만 있고 화면에는 아무 흔적도 없었다.
-패닉 리포트는 재부팅 직후가 아니라 **로그인 뒤 09:25에야** 기록됐다.
+패닉 리포트는 재부팅 직후가 아니라 로그인 뒤 09:25에야 기록됐다.
 
 ```
 panic(cpu 0 ...): watchdog timeout: no checkins from watchdogd in 92 seconds
@@ -61,4 +61,6 @@ mx.clear_cache()                    # 구간마다
 
 이렇게 고친 뒤 40구간을 다시 돌리자 cache는 0GB로 유지됐고, peak 메모리(1.99GB)도 수정 전과 같았다.
 
-**한 줄:** MLX 모델을 상주시키는 서버라면 `set_cache_limit` 와 `clear_cache` 를 반드시 넣어야 한다.
+## 한 줄
+
+MLX 모델을 상주시키는 서버라면 `set_cache_limit` 와 `clear_cache` 를 처음부터 넣고, 메모리는 RSS 말고 `mx.get_cache_memory()` 로 본다.

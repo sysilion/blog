@@ -19,7 +19,7 @@ DriverKit 가상 HID 장치를 써서 동작한다.
 물리 키보드 → Karabiner(seize) → 규칙 적용 → 가상 HID 키보드 → 앱
 ```
 
-이 때문에 **[[hidutil]] 매핑이나 시스템 설정의 '보조 키' 보다 앞선다.**
+이 때문에 [[hidutil]] 매핑이나 시스템 설정의 '보조 키' 보다 앞선다.
 Karabiner는 원래 키를 보고, 그 뒤에 hidutil 매핑이 가상 키보드에 적용된다.
 두 도구를 체인으로 엮을 수 있다는 뜻이기도 하다.
 
@@ -27,8 +27,8 @@ Karabiner는 원래 키를 보고, 그 뒤에 hidutil 매핑이 가상 키보드
 
 `~/.config/karabiner/karabiner.json` 하나다. 저장하면 즉시 반영된다.
 
-- `simple_modifications` — 키 1:1 치환. 조건 없음.
-- `complex_modifications` — 조건·동시입력·홀드 등. `manipulators` 배열.
+- `simple_modifications`: 키 1:1 치환. 조건 없음.
+- `complex_modifications`: 조건·동시입력·홀드 등. `manipulators` 배열.
 
 ```json
 { "from": { "key_code": "japanese_kana" }, "to": [{ "key_code": "right_command" }] }

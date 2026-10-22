@@ -13,7 +13,7 @@ Orca 1.4.232 앱 번들(`app.asar`)을 풀어 원격 런타임을 고르는 코�
 
 ## 원인
 
-Orca는 SSH 호스트에 설치된 Node를 쓰지 않는다. 자기가 고정한 **Node 24.21.0** 바이너리를 호스트에 올리고
+Orca는 SSH 호스트에 설치된 Node를 쓰지 않는다. 자기가 고정한 Node 24.21.0 바이너리를 호스트에 올리고
 그 위에서 relay와 [[orca-managed-server|orcad]]를 띄운다. 그래서 호스트 조건은 결국
 "이 Node 바이너리가 돌 수 있는가"이고, Linux에서는 [[glibc]] 버전이 기준이 된다.
 
@@ -27,8 +27,8 @@ Orca는 SSH 호스트에 설치된 Node를 쓰지 않는다. 자기가 고정한
 | --- | --- |
 | glibc ≥ 2.28 (x64·arm64) | 공식 Node 빌드 |
 | x64, 2.17 ≤ glibc < 2.28 | 비공식 호환 빌드 `linux-x64-glibc217` |
-| arm64, glibc < 2.28 | **없음** |
-| glibc < 2.17 | **없음** |
+| arm64, glibc < 2.28 | 없음 |
+| glibc < 2.17 | 없음 |
 | musl (x64·arm64) | musl 빌드 |
 | macOS | 13.5 이상 |
 | Windows | relay만 됨. 상주 `orcad` 는 POSIX 호스트에서만 |
@@ -73,4 +73,4 @@ grep -o 'var Ri={major:2,minor:28}.\{0,200\}' out/main/chunks/orcad-managed-serv
 
 ## 한 줄
 
-> Orca SSH 호스트의 최소 사양은 결국 "Orca가 가져온 Node 24가 거기서 도느냐"이고, Linux에서는 glibc 버전으로 갈린다.
+> 옛 Linux 서버를 Orca 호스트로 붙이기 전에 `getconf GNU_LIBC_VERSION` 부터 본다. 2.17 미만이면 지원되는 머신을 거쳐 `ssh` 로 들어간다.

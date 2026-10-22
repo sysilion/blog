@@ -13,7 +13,7 @@ VS Code 편집기에서는 멀쩡하다.
 
 ## 원인
 
-`②`(U+2461)는 [[east-asian-width]]가 **A(Ambiguous)** 라서 터미널·셸은 1칸으로 센다.
+`②`(U+2461)는 [[east-asian-width]]가 A(Ambiguous) 라서 터미널·셸은 1칸으로 센다.
 그런데 D2Coding(1.3.2, 1.4.0 모두)은 이 글리프를 advance 1000, 즉 2칸으로 그린다.
 Ghostty는 넘치는 글리프를 오른쪽 칸이 비어 있으면 넘치게 그리고, 차 있으면 1칸에 맞춰 줄인다.
 VS Code 편집기는 격자가 아니라 글리프 폭대로 그리니 문제가 안 보인다.
@@ -42,4 +42,4 @@ print(sum(1 for cp, g in c.items() if h[g][0] >= 1000
 
 ## 한 줄
 
-터미널에서 글자 크기가 위치마다 다르면 폰트 폭과 wcwidth가 서로 다른 말을 하고 있는 것이다.
+터미널에서 글자 크기가 위치마다 다르면 그 문자의 폰트 advance 폭과 wcwidth(East Asian Width)부터 비교해 본다.

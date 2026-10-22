@@ -11,10 +11,10 @@ WebGL 컨텍스트는 `<canvas>` 에서 `getContext('webgl'|'webgl2')` 로 얻�
 
 ## 구조
 
-- **컨텍스트 손실**: GPU 리셋이나 자원 부족 때 브라우저가 컨텍스트를 빼앗는다. `webglcontextlost` 이벤트가 오고 `isContextLost()` 가 `true` 가 된다.
+- 컨텍스트 손실: GPU 리셋이나 자원 부족 때 브라우저가 컨텍스트를 빼앗는다. `webglcontextlost` 이벤트가 오고 `isContextLost()` 가 `true` 가 된다.
 - `WEBGL_lose_context` 확장의 `loseContext()` 로 직접 반납할 수 있다.
 
 ## 알아둘 것
 
-- Chromium 은 페이지당 살아 있는 컨텍스트에 상한(16개 안팎)을 두고, 넘으면 **가장 오래된 것**을 lost 시킨다.
+- Chromium 은 페이지당 살아 있는 컨텍스트에 상한(16개 안팎)을 두고, 넘으면 가장 오래된 것을 lost 시킨다.
 - three.js 의 `renderer.dispose()` 는 GPU 자원만 정리하고 컨텍스트는 GC 에 맡긴다. 렌더러를 자주 만들고 버리면 `forceContextLoss()` 를 함께 부른다.

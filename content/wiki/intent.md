@@ -27,7 +27,7 @@ altnames: ["인텐트", "android intent"]
 
 ## 알아둘 것
 
-- **로그에 찍힌 `dat=` 는 잘려 있다.** `toShortString()` 이 `Uri.toSafeString()` 을
+- 로그에 찍힌 `dat=` 는 잘려 있다. `toShortString()` 이 `Uri.toSafeString()` 을
   거치며 경로·쿼리를 지운다. 온전한 값은 `dumpsys activity activities` 에 있다.
 - 한 앱이 화면을 전부 하나의 액티비티(웹뷰) 안에서 바꾸면 인텐트가 아예 안 생긴다.
   그런 앱은 딥링크로 특정 화면에 바로 들어갈 방법이 없다.
