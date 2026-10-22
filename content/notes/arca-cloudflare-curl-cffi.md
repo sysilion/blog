@@ -14,7 +14,7 @@ Scrapling 을 써보라는 말에 그 `Fetcher` 를 돌려 보니 200이 나왔�
 
 ## 원인
 
-Scrapling 의 `Fetcher` 는 브라우저를 띄우지 않는다. 안에서 `curl_cffi` 로 크롬의 TLS 핸드셰이크를 흉내 낼 뿐이다.
+Scrapling 의 `Fetcher` 는 브라우저를 띄우지 않는다. 안에서 [[curl-cffi|curl_cffi]] 로 크롬의 TLS 핸드셰이크를 흉내 낼 뿐이다.
 이 채널은 JS 챌린지가 아니라 [[tls-fingerprinting]] 단계에서 걸러내고 있었다. 헤더는 상관없었다.
 
 ## 재현
