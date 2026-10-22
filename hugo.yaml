@@ -37,9 +37,10 @@ params:
   # 커버 이미지가 없는 글에 제목 기반 SVG 커버를 자동으로 붙인다. → layouts/_partials/cover/auto.html
   # 지금은 꺼둠. 글 내용과 무관한 추상 패턴이라 목록에서 자리만 차지했다. true 로 바꾸면 다시 켜진다.
   autoCover: false
-  description: "개발 기록과 잡다한 생각들"
+  description: "Dev notes and assorted thoughts"
   author: "Bizu"
   defaultTheme: auto
+  DateFormat: "2006-01-02"
   ShowReadingTime: true
   ShowShareButtons: false
   ShowPostNavLinks: true
@@ -58,9 +59,9 @@ params:
     newPageBase: "https://github.com/sysilion/blog/new/main/content/wiki"
 
   homeInfoParams:
-    Title: "안녕하세요 👋"
+    Title: "Hi there 👋"
     Content: >
-      개발하면서 남기는 기록, 만든 것들, 그리고 잡다한 생각들.
+      Notes from building things, the things I built, and assorted thoughts.
 
   socialIcons:
     - name: github
@@ -114,6 +115,6 @@ menu:
       url: /search/
       weight: 30
     - identifier: home
-      name: ← 홈
+      name: ← Home
       url: https://bizu.is-a.dev/
       weight: 40

@@ -212,7 +212,7 @@ async function build() {
 
       const lines = [
         '---',
-        `title: ${yamlQuote(doc.fm.publicTitle ?? '비밀글')}`,
+        `title: ${yamlQuote(doc.fm.publicTitle ?? 'Secret')}`,
         `date: ${doc.fm.date ?? new Date().toISOString()}`,
         'draft: false',
         'searchHidden: true',

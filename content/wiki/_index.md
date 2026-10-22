@@ -1,6 +1,6 @@
 ---
-title: "위키"
-summary: "이 블로그에서 쓰는 용어 사전"
+title: "Wiki"
+summary: "Glossary of terms used on this blog"
 ShowToc: false
 ShowBreadCrumbs: true
 cascade:
