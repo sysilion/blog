@@ -7,8 +7,8 @@
   {{- $back := partial "wiki/backlinks.html" . -}}
   {{- if $back }}
   <section class="wiki-rel wiki-backlinks">
-    <h2>여기를 가리키는 문서 <span class="wiki-rel-count">{{ len $back }}</span></h2>
-    {{- range $g := slice (slice "posts" "글") (slice "notes" "노트") (slice "wiki" "용어") }}
+    <h2>What links here <span class="wiki-rel-count">{{ len $back }}</span></h2>
+    {{- range $g := slice (slice "posts" "Posts") (slice "notes" "Notes") (slice "wiki" "Terms") }}
       {{- $items := where $back "Section" (index $g 0) }}
       {{- with $items }}
       <ul class="wiki-rel-list">
@@ -25,7 +25,7 @@
   {{- end }}
   {{- with $fwd }}
   <section class="wiki-rel wiki-forwardlinks">
-    <h2>관련 용어</h2>
+    <h2>Related terms</h2>
     <ul class="wiki-rel-inline">
       {{- range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
     </ul>
@@ -34,7 +34,7 @@
 {{- else -}}
   {{- with $fwd }}
   <section class="wiki-rel wiki-forwardlinks">
-    <h2>이 글이 다루는 용어</h2>
+    <h2>Terms in this post</h2>
     <ul class="wiki-rel-inline">
       {{- range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
     </ul>

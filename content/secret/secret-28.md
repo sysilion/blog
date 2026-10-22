@@ -1,5 +1,5 @@
 ---
-title: "비밀글"
+title: "Secret"
 date: 2026-10-07T23:33:37+09:00
 draft: false
 searchHidden: true

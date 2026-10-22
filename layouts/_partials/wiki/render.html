@@ -37,7 +37,7 @@
       {{- $t := .title | htmlEscape -}}
       {{- $repl = printf `<a class="wl" href="%s" title="%s">%s</a>` .url $t ($label | default $t) -}}
     {{- else -}}
-      {{- $repl = printf `<a class="wl wl-missing" href="%s#wanted-%s" title="아직 없는 문서: %s">%s</a>`
+      {{- $repl = printf `<a class="wl wl-missing" href="%s#wanted-%s" title="Page does not exist yet: %s">%s</a>`
             $wikiURL $key $target ($label | default $target) -}}
     {{- end -}}
     {{- $content = replace $content $m $repl 1 -}}

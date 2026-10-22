@@ -1,6 +1,6 @@
 ---
-title: "검색"
+title: "Search"
 layout: "search"
 summary: "search"
-placeholder: "무엇을 찾으시나요?"
+placeholder: "Search..."
 ---
