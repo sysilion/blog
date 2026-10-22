@@ -1,7 +1,7 @@
 ---
 title: "128GB 맥에서 로컬 LLM 실행기 갈아타기"
 date: 2026-10-22T10:14:30+09:00
-draft: true
+draft: false
 tags: ["llm", "macos", "mlx", "벤치마크", "삽질"]
 summary: "DeepSeek 전용 엔진을 지우고 Qwen3.8-Flash-Next 와 Raon-1 mini 를 llama.cpp, Strata, MLX 로 돌려 봤다. 같은 모델도 실행기에 따라 초당 토큰이 1.5배 넘게 갈렸다."
 ---
