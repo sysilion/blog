@@ -12,13 +12,13 @@ altnames: ["overflow: hidden", "overflow: clip"]
 | 값 | 넘친 내용 | [[scroll-container\|스크롤 컨테이너]] 생성 |
 | --- | --- | --- |
 | `visible` | 그대로 보임 | 안 함 |
-| `hidden` | 잘림 | **함** (스크롤 UI만 감춤) |
+| `hidden` | 잘림 | 함 (스크롤 UI만 감춤) |
 | `clip` | 잘림 | 안 함 |
 | `scroll` / `auto` | 잘림 + 스크롤 | 함 |
 
 ## 알아둘 것
 
-**`hidden` 과 `clip` 의 차이는 눈에 보이지 않는다.** 둘 다 넘친 내용을 자르지만
+`hidden` 과 `clip` 의 차이는 눈에 보이지 않는다. 둘 다 넘친 내용을 자르지만
 `hidden` 만 스크롤 컨테이너를 만든다. 그래서 안쪽의 [[position-sticky]] 가 죽는다.
 반대로 `clip` 은 프로그래밍적 스크롤조차 허용하지 않으므로, 자르기만이 목적이라면 `clip` 이 맞다.
 

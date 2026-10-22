@@ -46,4 +46,6 @@ uv pip install --dry-run --only-binary :all: \
 기존 venv를 지우기 전에 `--dry-run --only-binary :all:` 로 새 버전에서 해석되는지 먼저 본다.
 지금 맞출 수 있는 최신은 3.14다.
 
-**한 줄:** 새 Python으로 올릴 수 있는지는 인터프리터가 아니라 가장 느린 네이티브 패키지의 wheel이 정한다.
+## 한 줄
+
+Python을 올리기 전에 torch 같은 네이티브 패키지에 새 `cp` 태그 wheel이 나왔는지부터 `--only-binary :all:` dry-run으로 확인한다.

@@ -8,16 +8,16 @@ summary: "credential.username으로 계정을 지정해도 소용없다. 다중 
 
 ## 무슨 일이
 
-`~/proj` 에서 git 원격 작업 직전에만 계정을 바꾸는 훅을 짜다가, **전환 자체를 없앨 수 있지 않을까** 싶었다.
+`~/proj` 에서 git 원격 작업 직전에만 계정을 바꾸는 훅을 짜다가, 전환 자체를 없앨 수 있지 않을까 싶었다.
 git은 credential helper에 `username=` 을 같이 넘긴다. [[gh-cli|gh]]가 그 이름에 맞는 토큰을 돌려준다면
 `~/.gitconfig` 의 `includeIf` 로 디렉토리마다 `credential.https://github.com.username` 만 갈라두면 끝이다.
 
-안 된다. gh는 **활성 계정 하나만** 응답한다.
+안 된다. gh는 활성 계정 하나만 응답한다.
 
 ## 원인
 
 `gh auth git-credential get` 은 요청의 `username` 을 매칭 키로 쓰지 않는다.
-로그인된 계정이 여럿이어도 `hosts.yml` 의 활성 계정 토큰만 내놓고, 그 외 이름에는 **빈 응답**을 준다.
+로그인된 계정이 여럿이어도 `hosts.yml` 의 활성 계정 토큰만 내놓고, 그 외 이름에는 빈 응답을 준다.
 빈 응답을 받은 git은 다음 helper로 넘어가거나 인증에 실패한다.
 
 ## 재현
@@ -42,7 +42,7 @@ $ printf 'protocol=https\nhost=github.com\nusername=sysilion-ib\n\n' | gh auth g
 
 다중 계정에서 저장소별로 계정을 고정하려면 둘 중 하나다.
 
-- `gh auth switch` 로 전역 활성 계정을 그때그때 바꾼다 — `~/.config/gh/hosts.yml` 을 고치는 **전역 상태**라
+- `gh auth switch` 로 전역 활성 계정을 그때그때 바꾼다. `~/.config/gh/hosts.yml` 을 고치는 전역 상태라
   동시에 도는 다른 셸·세션과 충돌한다. 전환 창을 명령 실행 시간만큼으로 줄이는 게 최선이다.
 - gh helper를 쓰지 않고 계정별 토큰을 직접 물린 helper를 디렉토리마다 `includeIf` 로 붙인다.
 
@@ -51,4 +51,4 @@ $ printf 'protocol=https\nhost=github.com\nusername=sysilion-ib\n\n' | gh auth g
 
 ## 한 줄
 
-**`gh` 는 credential helper로서 계정을 골라주지 않는다. 요청에 적힌 username과 무관하게 활성 계정 토큰만 준다.**
+저장소마다 GitHub 계정을 고정하고 싶으면 `credential.username` 은 건너뛰고, `gh auth switch` 를 짧게 쓰거나 계정별 토큰 helper를 `includeIf` 로 붙인다.

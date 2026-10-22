@@ -10,13 +10,13 @@ macOS 에서 한영 전환을 제대로 쓰려면 결국 뭔가를 깔게 된다
 기본 설정으로는 안 되기 때문이다. 나는 [[karabiner-elements|Karabiner]] 로 그걸 해왔고,
 [[gksdud]] 라는 전용 유틸을 발견해서 옮겼다.
 
-옮기는 김에 알게 된 게 있다. **내 맥에는 한영 전환을 거는 놈이 셋이었다.**
+옮기는 김에 알게 됐는데, 내 맥에는 한영 전환을 거는 놈이 셋이었다.
 서로 같은 자리를 두고 싸우고 있었는데 그동안 우연히 동작하고 있었을 뿐이다.
 
 ## 왜 유령 키를 경유하는가
 
-먼저 이 바닥의 전제를 알아야 한다. macOS 의 "이전 입력 소스 선택" 단축키는
-**모디파이어 단독 키를 받지 못한다.** 오른쪽 커맨드를 그냥 등록할 수가 없다.
+macOS 의 "이전 입력 소스 선택" 단축키는
+모디파이어 단독 키를 받지 못한다. 오른쪽 커맨드를 그냥 등록할 수가 없다.
 
 그래서 한영 전환 도구들은 전부 같은 우회로를 쓴다.
 
@@ -24,7 +24,7 @@ macOS 에서 한영 전환을 제대로 쓰려면 결국 뭔가를 깔게 된다
 한영 키 → (도구가 가로채서) → F18 → 시스템 "이전 입력 소스 선택"
 ```
 
-왜 하필 F18인가. [[hid-usage-id|HID 규격]]에는 F1부터 **F24까지** 정의돼 있는데,
+왜 하필 F18인가. [[hid-usage-id|HID 규격]]에는 F1부터 F24까지 정의돼 있는데,
 맥북에는 F12까지밖에 없다. F13~F24 는 번호는 있지만 누를 방법이 없는 유령 키다.
 
 | 키 | HID usage | 물리 키 |
@@ -40,13 +40,13 @@ macOS 에서 한영 전환을 제대로 쓰려면 결국 뭔가를 깔게 된다
 
 옮기기 전에 현황을 확인했더니 이랬다.
 
-**Karabiner** — `~/.config/karabiner/karabiner.json`
+Karabiner (`~/.config/karabiner/karabiner.json`):
 
 ```json
 { "from": { "key_code": "right_command" }, "to": [{ "key_code": "f18" }] }
 ```
 
-**Hammerspoon** — `~/.hammerspoon/init.lua`
+Hammerspoon (`~/.hammerspoon/init.lua`):
 
 ```lua
 local FRemap = require('foundation_remapping')
@@ -55,7 +55,7 @@ remapper:remap('kana', 'f18')
 remapper:register()
 ```
 
-**시스템** — "이전 입력 소스 선택" 이 F18
+시스템에서는 "이전 입력 소스 선택" 이 F18 이다.
 
 ```bash
 $ /usr/libexec/PlistBuddy -c "Print :AppleSymbolicHotKeys:60" \
@@ -82,7 +82,7 @@ Dict {
 한/영 키 ──(Hammerspoon)────┘
 ```
 
-이게 잘 굴러갔던 이유는 **셋이 같은 F18 을 가리키고 있었기 때문**이다.
+이게 잘 굴러갔던 건 셋이 같은 F18 을 가리키고 있었기 때문이다.
 하나라도 어긋나는 순간 무너진다.
 
 ## hidutil 값 읽는 법
@@ -110,13 +110,13 @@ Dst: 30064771181 - 30064771072 = 109 = 0x6D  → F18
 
 `Kana → F18`. Hammerspoon 이 건 그것이다.
 
-여기서 한 번 헷갈렸다. **hidutil 은 HID usage 를 쓰고, `AppleSymbolicHotKeys` 는
-macOS 가상 키코드를 쓴다.** 같은 F18 이 한쪽에선 `0x6D`, 다른 쪽에선 `79`(`0x4F`)다.
+여기서 한 번 헷갈렸다. hidutil 은 HID usage 를 쓰고, `AppleSymbolicHotKeys` 는
+macOS 가상 키코드를 쓴다. 같은 F18 이 한쪽에선 `0x6D`, 다른 쪽에선 `79`(`0x4F`)다.
 두 숫자를 나란히 놓고 보면 전혀 달라 보이는데 같은 키다.
 
 ## gksdud 로 옮기기
 
-[[gksdud]] 도 원리는 같다. 다만 기본 중계 키가 **F19** 이고, "누를 때 전환" 을 켜면
+[[gksdud]] 도 원리는 같다. 다만 기본 중계 키가 F19 이고, "누를 때 전환" 을 켜면
 키를 누른 시점에 F19 의 down/up 을 연달아 쏜다. 기본 동작이 키를 뗄 때 처리되는 데서 오는
 지연과 글자 씹힘이 여기서 사라진다.
 
@@ -124,11 +124,11 @@ macOS 가상 키코드를 쓴다.** 같은 F18 이 한쪽에선 `0x6D`, 다른 �
 brew install --cask codingnoye/tap/gksdud
 ```
 
-문제는 **셋 다 살려두면 안 된다**는 것이다. gksdud 는 hidutil 의 `UserKeyMapping` 을 쓰는데,
+다만 셋 다 살려두면 안 된다. gksdud 는 hidutil 의 `UserKeyMapping` 을 쓰는데,
 Hammerspoon 도 같은 자리를 쓴다. 슬롯은 하나다. 나중에 `--set` 한 쪽이 앞의 것을 통째로 덮어쓴다.
 
-Karabiner 는 사정이 다르다. 이쪽은 hidutil 을 안 쓰고, 장치를 **seize** 해서 raw HID 이벤트를
-직접 받은 뒤 가상 키보드로 재발행한다. 그래서 hidutil 계층보다 **앞선다.**
+Karabiner 는 사정이 다르다. 이쪽은 hidutil 을 안 쓰고, 장치를 seize 해서 raw HID 이벤트를
+직접 받은 뒤 가상 키보드로 재발행한다. 그래서 hidutil 계층보다 앞선다.
 하지만 오른쪽 커맨드를 Karabiner 가 먼저 F18 로 바꿔버리면 gksdud 는 오른쪽 커맨드를
 아예 보지 못한다. 이것도 빼야 한다.
 
@@ -172,7 +172,7 @@ $ hidutil property --get "UserKeyMapping"
 gksdud 가 걸었어야 할 `오른쪽 커맨드 → F19` 가 없다. 대신 지웠어야 할
 Hammerspoon 잔재만 남아 있다. gksdud 가 동작을 안 하나 싶었는데 아니었다.
 
-**gksdud 는 장치별로 `--matching` 필터를 걸어 매핑을 등록한다.**
+gksdud 는 장치별로 `--matching` 필터를 걸어 매핑을 등록한다.
 필터 없는 `--get` 에는 그게 안 잡힌다. 실제 상태는 여기서 봐야 한다.
 
 ```bash
@@ -198,24 +198,24 @@ hidutil 매핑은 재부팅하면 사라지고, Hammerspoon 은 이제 다시 �
 
 ## 외장 키보드의 한/영 키
 
-여기서 진짜 문제가 나왔다. 내장 키보드의 오른쪽 커맨드는 되는데 **외장 USB 키보드의
-한/영 키가 먹통**이었다.
+여기서 진짜 문제가 나왔다. 내장 키보드의 오른쪽 커맨드는 되는데 외장 USB 키보드의
+한/영 키가 먹통이었다.
 
-이유는 명확하다. gksdud 가 시스템 단축키를 **F19 로 바꿨는데**, 외장 키보드의 한/영 키는
-아직 살아 있는 Hammerspoon 잔재 때문에 **F18 을 쏘고 있었다.** 받는 사람이 없다.
+gksdud 가 시스템 단축키를 F19 로 바꿨는데, 외장 키보드의 한/영 키는
+아직 살아 있는 Hammerspoon 잔재 때문에 F18 을 쏘고 있었다. 받는 사람이 없다.
 
 Karabiner EventViewer 로 확인하니 그 키는 `japanese_kana` 로 잡혔다.
-일본어 키가 아니다. **한국어 키보드의 한/영 키와 일본어 Kana 키가 같은 HID usage `0x90`
-(lang1)을 쓴다.** 그래서 도구들이 이걸 `kana` 나 `japanese_kana` 로 부른다.
+한국어 키보드의 한/영 키와 일본어 Kana 키가 같은 HID usage `0x90`
+(lang1)을 쓰기 때문이다. 그래서 도구들이 이걸 `kana` 나 `japanese_kana` 로 부른다.
 
 그럼 gksdud 설정에서 한영 키를 한/영 키로 바꾸면 되나. 안 된다.
-**gksdud 의 한영 키는 전역으로 하나다**(`TargetKey`). "대상 키보드 설정" 은 적용 여부만
-고르는 것이지, 키보드마다 다른 키를 지정하는 기능이 아니다. 한/영 키로 바꾸면
+gksdud 의 한영 키는 전역으로 하나다(`TargetKey`). "대상 키보드 설정" 은 적용 여부만
+고를 뿐, 키보드마다 다른 키를 지정하지는 못한다. 한/영 키로 바꾸면
 내장 키보드의 오른쪽 커맨드가 죽는다.
 
 ### 해법 — Karabiner 를 앞단으로 쓴다
 
-Karabiner 가 hidutil 보다 **앞선다**는 성질을 이용하면 된다.
+Karabiner 가 hidutil 보다 앞선다는 성질을 이용하면 된다.
 한/영 키를 오른쪽 커맨드로 바꿔서, gksdud 가 이미 처리 중인 경로에 합류시킨다.
 
 ```json
@@ -241,7 +241,7 @@ Hammerspoon 에는 한영 관련 코드가 하나 더 있었다. IDEA·VS Code·
 hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
 ```
 
-이건 남겼다. 다만 주의할 점이 있다. **gksdud 는 입력 소스를 직접 바꾸지 않는다**는 설계고,
+이건 남겼다. 다만 gksdud 는 입력 소스를 직접 바꾸지 않는 설계인데,
 이 코드는 정면으로 갈아끼운다. gksdud 의 대소문자 보존 기능이 추적하는 내부 상태와
 어긋날 수 있다. 문제가 생기면 `hs.eventtap.keyStroke({}, 'f19')` 로 gksdud 의 중계 키를
 쏘는 방식으로 바꾸면 된다.
@@ -257,7 +257,7 @@ gksdud 메뉴바 아이콘과 겹치긴 하는데, 시선이 가는 위치가 �
 | [[gksdud]] | [[hidutil]] (장치별) | `right_command → F19` + 누를 때 전환 |
 | 시스템 | `AppleSymbolicHotKeys:60` | F19 = 이전 입력 소스 선택 |
 
-한영 전환이 안 될 때 볼 곳은 결국 **양쪽 끝이 같은 F-키를 가리키는가** 하나다.
+한영 전환이 안 될 때 볼 곳은 결국 양쪽 끝이 같은 F-키를 가리키는가 하나다.
 
 ```bash
 # 이쪽이 쏘는 키 (HID usage: F18=0x6D, F19=0x6E)
@@ -269,6 +269,6 @@ defaults read io.gksdud.inputswitch
   ~/Library/Preferences/com.apple.symbolichotkeys.plist
 ```
 
-마지막으로 하나. gksdud 는 **정상 종료해야 키보드 설정이 복원된다.**
+그리고 gksdud 는 정상 종료해야 키보드 설정이 복원된다.
 강제 종료하거나 그대로 지우면 hidutil 매핑과 시스템 단축키가 되돌려지지 않고 남는다.
 업그레이드 전에는 메뉴바에서 종료할 것.

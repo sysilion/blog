@@ -15,7 +15,7 @@ DB에는 `2026-10-20 17:45:36` 이 시간대 없이 들어 있었다. API가 그
 ## 원인
 
 SQLAlchemy의 SQLite 방언에는 시간대를 담을 자리가 없다. `DateTime(timezone=True)` 로 선언해도
-저장할 때 `tzinfo` 를 **UTC로 바꾸지 않고 그냥 떼어 낸다**. 읽을 때는 [[naive-datetime]]이 돌아온다.
+저장할 때 `tzinfo` 를 UTC로 바꾸지 않고 그냥 떼어 낸다. 읽을 때는 [[naive-datetime]]이 돌아온다.
 `server_default=func.now()` 는 SQLite의 `CURRENT_TIMESTAMP`, 즉 UTC다.
 그래서 같은 컬럼에 "UTC 벽시계 시각"과 "넣은 쪽의 벽시계 시각"이 섞일 수 있다.
 
@@ -48,4 +48,6 @@ with Session(e) as s:
 - 내보낼 때 시간대가 없으면 UTC로 붙인다. `value.replace(tzinfo=timezone.utc).isoformat()` → `...+00:00`.
   브라우저의 `new Date()` 가 그제야 현지 시각으로 맞게 바꾼다.
 
-**한 줄:** SQLite의 `timezone=True` 는 선언일 뿐, 시간대는 앱이 지켜야 한다.
+## 한 줄
+
+SQLite에서는 `timezone=True` 를 믿지 말고 앱에서 UTC로 맞춰 넣고, 내보낼 때 시간대를 붙인다.

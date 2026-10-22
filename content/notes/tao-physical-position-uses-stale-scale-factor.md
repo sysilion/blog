@@ -16,7 +16,7 @@ window.set_position(PhysicalPosition::new(area.position.x, area.position.y))?;
 window.set_size(PhysicalSize::new(area.size.width, area.size.height))?;
 ```
 
-주 모니터는 정확히 맞았는데 보조 모니터 쪽 창만 **정확히 절반** 크기로, 절반 좌표에 앉았다.
+주 모니터는 정확히 맞았는데 보조 모니터 쪽 창만 정확히 절반 크기로, 절반 좌표에 앉았다.
 
 ```
 목표: 1920x1080 @ (-223, -1080)
@@ -26,7 +26,7 @@ window.set_size(PhysicalSize::new(area.size.width, area.size.height))?;
 ## 원인
 
 [[tao]]의 macOS 구현은 물리 좌표를 논리 좌표로 바꿔서 AppKit에 넘긴다.
-그때 쓰는 배율이 **그 창이 지금 올라가 있는 화면의 배율**이다.
+그때 쓰는 배율이 그 창이 지금 올라가 있는 화면의 배율이다.
 
 ```rust
 // tao: src/platform_impl/macos/window.rs
@@ -56,7 +56,7 @@ for (i, monitor) in app.available_monitors()?.iter().enumerate() {
 ```
 
 `outer_position()`을 호출 직후에 읽어도 소용없다. `set_position`은 이벤트 루프로 메시지를
-보내고 바로 반환하는 fire-and-forget이라 **직후의 읽기는 옛날 값을 준다.**
+보내고 바로 반환하는 fire-and-forget이라 직후에 읽으면 옛날 값이 나온다.
 
 ## 그래서
 
@@ -74,4 +74,4 @@ for delay in [120, 400, 1200] {
 
 ## 한 줄
 
-배율이 섞인 멀티 모니터에서 물리 좌표 배치는 **한 번에 끝나지 않는다.** 옮긴 뒤 다시 맞춰야 한다.
+배율이 섞인 멀티 모니터에서 창을 물리 좌표로 배치했으면, 이벤트 루프가 돈 뒤와 `ScaleFactorChanged` 때 같은 기하를 한 번 더 적용한다.

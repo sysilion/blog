@@ -16,11 +16,11 @@ summary: "macOS는 배경 앱의 첫 클릭을 '앱 활성화'로 소비한다. 
 
 ## 원인
 
-macOS는 **비활성 앱**의 창을 클릭하면 그 클릭을 "앱 활성화"에 써 버린다.
+macOS는 비활성 앱의 창을 클릭하면 그 클릭을 "앱 활성화"에 써 버린다.
 뷰까지 전달하지 않는다. 이 동작을 끄는 것이 [[accepts-first-mouse|acceptsFirstMouse]]다.
 
 오버레이는 절대 포커스를 뺏으면 안 되는 창이라(`.focused(false)`) 앱이 항상 비활성이었고,
-그래서 **모든** 클릭이 첫 클릭이었다.
+그래서 모든 클릭이 첫 클릭이었다.
 
 ## 재현
 
@@ -41,7 +41,7 @@ WebviewWindowBuilder::new(app, "overlay", url)
 
 ## 그래서
 
-데스크탑 마스코트, HUD, 플로팅 팔레트처럼 **포커스를 안 가져가면서 클릭은 받아야 하는 창**은
+데스크탑 마스코트, HUD, 플로팅 팔레트처럼 포커스를 안 가져가면서 클릭은 받아야 하는 창은
 `accept_first_mouse`가 사실상 필수다.
 
 다만 이건 왼쪽 버튼 이야기다. 오른쪽 클릭은 앱이 비활성인 동안 웹뷰까지 오지 않을 수 있어서,
@@ -49,4 +49,4 @@ WebviewWindowBuilder::new(app, "overlay", url)
 
 ## 한 줄
 
-`acceptsFirstMouse`를 안 켜면 배경 앱의 창은 클릭을 한 번씩 버린다. 포커스를 안 받는 창이라면 매번 버린다.
+포커스를 안 받는 창을 만들 때는 처음부터 `accept_first_mouse(true)` 를 켜고, 오른쪽 클릭은 `mousedown` 에서 받는다.

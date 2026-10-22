@@ -12,7 +12,7 @@ summary: "용어 문서마다 전체 페이지의 위키링크를 다시 추출�
 
 ## 원인
 
-`layouts/_partials/wiki/backlinks.html` 은 용어 문서 하나를 그릴 때마다 사이트의 **모든** 페이지에 대해
+`layouts/_partials/wiki/backlinks.html` 은 용어 문서 하나를 그릴 때마다 사이트의 모든 페이지에 대해
 `partial "wiki/targets.html" $p` 로 그 페이지의 `[[...]]` 링크 목록을 원문에서 다시 뽑았다.
 용어 112개 × 페이지 205개 ≈ 2만 3천 번. 결과는 페이지마다 항상 같은데도 매번 정규식을 돌렸다.
 

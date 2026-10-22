@@ -12,7 +12,7 @@ altnames: ["partialcached", "partial cached"]
 
 ## 구조
 
-- 키를 생략하면 partial 이름만으로 캐시된다 — 사이트 전체에서 결과가 하나. 페이지마다 다른 결과라면 반드시 키를 준다 (`.Path`, `.RelPermalink` 등).
+- 키를 생략하면 partial 이름만으로 캐시되어 사이트 전체에서 결과가 하나뿐이다. 페이지마다 다른 결과라면 반드시 키를 준다 (`.Path`, `.RelPermalink` 등).
 - 캐시 수명은 한 번의 빌드다. `hugo server` 증분 빌드에서는 바뀐 페이지에 대해 다시 계산된다.
 
 ## 알아둘 것

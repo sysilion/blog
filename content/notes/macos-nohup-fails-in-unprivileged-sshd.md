@@ -8,7 +8,7 @@ summary: "사용자 권한으로 띄운 sshd 로 붙으면 /usr/bin/nohup 이 'c
 
 ## 무슨 일이
 
-Orca 의 SSH 원격 기능을 로컬에서 검증하려고, Docker 없이 **내 계정 권한으로 `sshd` 를 고포트에 띄우고** 그 호스트에 붙었다.
+Orca 의 SSH 원격 기능을 로컬에서 검증하려고, Docker 없이 내 계정 권한으로 `sshd` 를 고포트에 띄우고 그 호스트에 붙었다.
 연결·인증·파일 업로드까지는 멀쩡했는데 원격 relay 만 뜨지 않았다. 로그에는 한 줄뿐이었다.
 
 ```
@@ -25,7 +25,7 @@ root 가 아닌 sshd 는 로그인 세션용 audit 세션을 만들지 못한다
 BSM audit: bsm_audit_session_setup: setaudit_addr failed: Operation not permitted
 ```
 
-macOS 의 `/usr/bin/nohup` 은 HUP 을 무시하는 것 외에 **콘솔 세션에서 떨어져 나오는 단계**를 거친다
+macOS 의 `/usr/bin/nohup` 은 HUP 을 무시하는 것 외에 콘솔 세션에서 떨어져 나오는 단계를 거친다
 (에러 문구가 그 단계에서 나온다). 이 세션에서는 그 단계가 `ENOTTY` 로 실패하고, 명령을 실행하지 않은 채 127 로 끝났다.
 stdin·stdout·stderr 를 모두 리다이렉트해도 마찬가지다.
 
@@ -63,8 +63,8 @@ trap "" HUP
 exec "$@"
 ```
 
-실제 macOS 원격 호스트(시스템 sshd = root)에서는 이 문제가 없다. 사용자 권한 sshd 로 만든 테스트 환경에서만 생기는 문제다.
+실제 macOS 원격 호스트(시스템 sshd = root)에서는 생기지 않고, 사용자 권한 sshd 로 만든 테스트 환경에서만 생긴다.
 
 ## 한 줄
 
-**macOS `nohup` 은 audit 세션 없이는 동작하지 않는다. 사용자 권한 sshd 로 테스트하면 `nohup ... &` 로 띄우는 데몬은 전부 안 뜬다.**
+사용자 권한 sshd 로 macOS 원격을 테스트하다 `nohup ... &` 데몬이 안 뜨면 sshd 로그에서 BSM audit 실패를 확인하고, HUP 만 무시하는 shim 을 `PATH` 앞에 둔다.

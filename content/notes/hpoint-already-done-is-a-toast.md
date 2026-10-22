@@ -13,7 +13,7 @@ H.Point 출석 자동화를 만들었다. 출첵룰렛 START 를 누르면 첫�
 
 ## 원인
 
-그 회색 상자는 [[toast|토스트]]다. 토스트는 앱의 창이 아니라 시스템이 띄운 별도 창이라서
+그 회색 상자는 [[toast|토스트]]다. 토스트는 앱과 별개로 시스템이 띄운 창이라서
 [[uiautomator]] 가 덤프하는 앱 창의 트리에 들어가지 않는다. 스크린샷에만 찍힌다.
 
 ## 재현
@@ -28,7 +28,7 @@ adb exec-out screencap -p > s.png     # 화면에는 '이미 출석 하였습니
 ## 그래서
 
 토스트를 읽으려 하지 않고, 같은 화면의 다른 숫자로 판정한다. 룰렛 화면 아래 `나의 출석일 N 일` 의 N 을 START 앞뒤로 읽어서,
-팝업이 없고 N 도 그대로면 "이미 출석" 으로 적는다. 첫날 START 뒤에는 N 이 19에서 20이 됐다. → `naver/naverpay_click/appcheck.py` `_hp_roulette`
+팝업이 없고 N 도 그대로면 "이미 출석" 으로 적는다. 첫날 START 뒤에는 N 이 19에서 20이 됐다. 구현은 `naver/naverpay_click/appcheck.py` 의 `_hp_roulette`.
 
 ## 한 줄
 

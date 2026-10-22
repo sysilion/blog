@@ -32,7 +32,7 @@ public void asyncSyncProduct(Product product) {
 ## 원인
 
 `@Async`·`@Transactional` 은 프록시로 구현된다. 스프링이 빈을 감싼 프록시를
-컨테이너에 등록하고, **외부에서 그 프록시를 통해 들어온 호출**만 가로챈다.
+컨테이너에 등록하고, 외부에서 그 프록시를 통해 들어온 호출만 가로챈다.
 
 `this.asyncSyncProduct(...)` 는 프록시를 거치지 않고 실제 객체의 메서드를
 직접 부른다. 그래서 애노테이션이 전부 무효가 된다. 컴파일 경고도, 런타임
@@ -71,13 +71,12 @@ private PriceSyncService self() { return selfProvider.getObject(); }
 // self().asyncSyncProduct(product);
 ```
 
-**다만 고치는 방향을 잘 골라야 한다.** 이 코드에서 `@Async` 를 그냥
+다만 고치는 방향을 잘 골라야 한다. 이 코드에서 `@Async` 를 그냥
 "작동하게" 만들면 더 나빠진다. `spring.threads.virtual.enabled: true` 라서
 상품 수만큼의 가상 스레드가 한꺼번에 뜨고, 상품마다 2~5초 쉬던 간격이
 의미를 잃는다. 탐지 회피가 목적이었던 코드가 정확히 그 반대로 뒤집힌다.
 
-간격이 의도된 것이라면 비동기로 만들 대상은 개별 작업이 아니라 **루프
-전체**다.
+간격이 의도된 것이라면 개별 작업 말고 루프 전체를 비동기로 만든다.
 
 ```java
 @Scheduled(cron = "...")
@@ -96,5 +95,5 @@ public void runPacedSync(List<String> ids) {
 
 ## 한 줄
 
-self-invocation 은 애노테이션을 침묵 속에 삭제한다. 그리고 그걸 되살릴 때는
-원래 그 코드가 왜 느렸는지를 먼저 봐야 한다.
+같은 클래스 안에서 `@Async`·`@Transactional` 메서드를 부르는 코드를 보면 `self()` 프록시로 바꾸되,
+바꾸기 전에 그 코드가 왜 느리게 돌았는지(의도된 간격인지)부터 확인한다.

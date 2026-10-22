@@ -44,4 +44,4 @@ localhost는 HTTP여도 [[secure-context|secure context]]로 취급되므로, �
 
 ## 한 줄
 
-`server.https` 를 켜 두면 `vite preview` 도 HTTPS다 — 서비스워커를 확인할 땐 별도 HTTP 서버로 `dist` 를 띄운다.
+`server.https` 를 켜 둔 프로젝트에서 서비스워커를 확인할 땐 `vite preview` 대신 별도 HTTP 서버로 `dist` 를 띄운다.

@@ -14,7 +14,7 @@ Nerd Fonts 공식 배포본의 D2Coding은 아직 1.3.2(2018)다. 2026-10 나온
 
 ## 원인
 
-D2Coding의 라이선스는 [[ofl|SIL OFL]]이고, `OFL.txt`에 **Reserved Font Name D2Coding** 이 선언돼 있다.
+D2Coding의 라이선스는 [[ofl|SIL OFL]]이고, `OFL.txt`에 Reserved Font Name D2Coding 이 선언돼 있다.
 수정본(Modified Version)은 [[reserved-font-name]]을 쓸 수 없으므로 font-patcher가 이름을 바꾼다.
 규칙은 `bin/scripts/name_parser/FontnameTools.py` 에 하드코딩돼 있다.
 
@@ -24,7 +24,7 @@ D2Coding의 라이선스는 [[ofl|SIL OFL]]이고, `OFL.txt`에 **Reserved Font 
 
 Cascadia Code → CaskaydiaCove 등 다른 RFN 폰트도 같은 표로 바뀐다.
 
-반면 Nerd Fonts **공식 릴리스**(3.4.0)에 든 D2Coding은 패밀리명이 `D2CodingLigature Nerd Font` 그대로다.
+반면 Nerd Fonts 공식 릴리스(3.4.0)에 든 D2Coding은 패밀리명이 `D2CodingLigature Nerd Font` 그대로다.
 직접 패치한 것과 공식 배포본은 이름이 달라서 둘 다 설치하면 별개 폰트로 잡힌다.
 
 ## 재현
@@ -43,9 +43,9 @@ ls out   # D2KodingLigatureNerdFont-Regular.ttf
 
 ## 그래서
 
-에디터·터미널 폰트 설정에는 `D2Coding Nerd Font`가 아니라 **`D2Koding Nerd Font`** 로 적어야 한다.
+에디터·터미널 폰트 설정에는 `D2Coding Nerd Font`가 아니라 `D2Koding Nerd Font` 로 적어야 한다.
 `--makegroups -1` 로 원래 이름을 유지할 수는 있지만 RFN 위반이라 재배포하면 안 된다.
 
 ## 한 줄
 
-OFL 예약 폰트명이 걸린 폰트는 패치하면 이름이 바뀐다. 못 찾겠으면 철자를 의심하라.
+직접 패치한 폰트가 설정에서 안 잡히면 결과 파일의 패밀리명부터 확인한다. OFL 예약 폰트명이 걸린 폰트는 이름이 바뀌어 있다.

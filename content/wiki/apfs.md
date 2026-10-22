@@ -11,8 +11,8 @@ altnames: ["Apple File System"]
 
 ## 알아둘 것
 
-macOS 설치 시 만들어지는 기본 볼륨은 **case-insensitive, case-preserving** 이다.
-[[case-sensitivity|대소문자 구분]] 문서 참고 — 이름은 입력한 대로 보존하지만, 조회할 때는
+macOS 설치 시 만들어지는 기본 볼륨은 case-insensitive, case-preserving 이다
+([[case-sensitivity|대소문자 구분]] 참고). 이름은 입력한 대로 보존하지만, 조회할 때는
 `CLAUDE.md` 와 `claude.md` 가 같은 항목이다.
 
 ```bash

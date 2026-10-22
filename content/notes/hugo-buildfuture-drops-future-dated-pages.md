@@ -13,7 +13,7 @@ summary: "front matter 의 date 를 어림잡아 적었더니 커밋 시각보�
 
 ## 원인
 
-front matter 의 시각이 커밋 시각보다 **미래**였다.
+front matter 의 시각이 커밋 시각보다 미래였다.
 
 ```
 date(front matter)  2026-09-15T02:40:00+09:00
@@ -22,9 +22,9 @@ hugo.yaml:9         buildFuture: false
 ```
 
 [[buildfuture]] 가 `false` 면 빌드 시각보다 `date` 가 미래인 페이지는 출력되지 않는다.
-**경고도 exit code 도 없다.** 워크플로는 성공하고 페이지만 사라진다.
+경고도 exit code 도 없이 워크플로는 성공하고 페이지만 사라진다.
 
-시각이 미래로 찍힌 이유는 단순하다. `hugo new` 를 쓰지 않고 파일을 직접 쓰면서
+시각이 미래로 찍힌 건 `hugo new` 를 쓰지 않고 파일을 직접 쓰면서
 `archetypes/notes.md` 의 `date: {{ .Date }}` 를 거치지 않았고, 시각을 어림잡아 적었다.
 지금까지 쌓인 것들을 보면 전부 초가 `:00`, 분은 5분 단위다.
 
@@ -78,4 +78,4 @@ date -Iseconds                         # 직접 쓸 때는 이 값을 붙여넣�
 
 ## 한 줄
 
-> 배포가 초록불인데 페이지가 없으면 `hugo list future` 부터. 손으로 적은 시각은 미래로 샌다.
+> 배포가 초록불인데 페이지가 없으면 `hugo list future` 부터 본다. 문서 시각은 어림잡지 말고 `date -Iseconds` 값을 붙인다.

@@ -27,7 +27,7 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 # 200
 ```
 
-UA를 바꿔도, 헤더를 브라우저와 똑같이 맞춰도 로컬은 계속 200. 즉 **헤더가 아니라 IP** 문제다.
+UA를 바꿔도, 헤더를 브라우저와 똑같이 맞춰도 로컬은 계속 200이니 IP 문제다.
 [[github-actions|GitHub Actions]] 러너의 Azure 대역이 막혀 있다.
 
 ## 원인
@@ -35,7 +35,7 @@ UA를 바꿔도, 헤더를 브라우저와 똑같이 맞춰도 로컬은 계속 
 파서 공통 유틸에 이미 프록시 통로가 있었다. [[datacenter-ip]]를 막는 사이트(wuwatracker,
 nikke.gg)를 위해 `SYNC_PROXY`를 두고 `fetch()`에서 쓰고 있었다.
 
-문제는 **위키 API 경로가 그 통로를 안 탔다는 것**이다. 코드 주석에 의도가 그대로 남아 있었다.
+그런데 위키 API 경로는 그 통로를 안 탔다. 코드 주석에 의도가 그대로 남아 있었다.
 
 ```python
 # ── MediaWiki 위키 소스 공통 유틸 ──
@@ -61,7 +61,7 @@ r = requests.get(api, headers=BROWSER_HEADERS, timeout=20, params=params,
 
 `proxies()`는 `SYNC_PROXY`가 없으면 `None`을 주므로 로컬 실행은 그대로 직결이다.
 
-한 가지 더. 실패한 워크플로의 로그를 끝까지 읽으면 커밋과 배포는 **이미 끝난 뒤**였다.
+실패한 워크플로의 로그를 끝까지 읽어 보면 커밋과 배포는 이미 끝난 뒤였다.
 
 ```text
 dca32e8..dfe1835  main -> main
@@ -75,4 +75,4 @@ https://github.com/.../actions/runs/34005703495   ← deploy 트리거됨
 
 ## 한 줄
 
-> 공식 API라고 차단 예외가 아니다. IP로 막는 엣지 앞에서 `/w/api.php`는 그냥 또 하나의 URL이다.
+> CI에서만 403이 나면 API 경로까지 프록시를 타는지 확인한다. CI가 빨간불이어도 배포가 이미 됐는지 로그 끝까지 본다.

@@ -23,7 +23,7 @@ EOFError: EOF when reading a line
 ## 원인
 
 예전에 이 저장소에서 filter-repo 를 한 번 돌린 적이 있었고, 그 기록 `.git/filter-repo/already_ran` 이 남아 있었다.
-이 파일이 **하루보다 오래됐으면** filter-repo 는 이번 실행이 이전 필터링의 연장인지 묻는다.
+이 파일이 하루보다 오래됐으면 filter-repo 는 이번 실행이 이전 필터링의 연장인지 묻는다.
 `--force` 는 "새 클론이 아니다" 검사만 건너뛸 뿐 이 질문은 건너뛰지 않는다.
 답은 `input()` 으로 받으므로 stdin 이 닫혀 있으면 [[eof|EOF]] 로 예외가 난다.
 
@@ -47,4 +47,4 @@ echo N | git filter-repo --force --invert-paths --path b   # → Completely fini
 
 ## 한 줄
 
-> **`--force` 는 모든 확인을 끄는 스위치가 아니다. 오래된 `already_ran` 은 대화형 질문을 부른다.**
+> 비대화형 셸에서 filter-repo 를 돌릴 땐 `--force` 만 믿지 말고 `echo N |` 으로 답을 넘기고, 다음 단계는 `&&` 로 엮는다.

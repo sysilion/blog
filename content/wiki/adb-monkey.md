@@ -18,7 +18,7 @@ monkey 는 앱에 무작위 터치·키·제스처를 보내 안정성을 시험
 
 ## 알아둘 것
 
-- **끝날 때 화면 회전 잠금을 푼다.** 회전을 기본 방향으로 고정했다가 바로 풀기 때문에
+- 끝날 때 화면 회전 잠금을 푼다. 회전을 기본 방향으로 고정했다가 바로 풀기 때문에
   `accelerometer_rotation` 이 1이 된다. 사용자가 꺼 둔 자동 회전이 켜진다.
 - 앱 실행만 필요하면 `cmd package resolve-activity --brief -c android.intent.category.LAUNCHER <패키지>`
   로 런처 액티비티를 찾아 `am start -n` 으로 띄우는 편이 부작용이 없다.

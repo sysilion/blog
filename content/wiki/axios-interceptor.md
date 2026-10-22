@@ -7,7 +7,7 @@ summary: "axios 요청·응답을 보내기 전/받은 뒤에 가로채는 훅. 
 altnames: ["axios interceptor", "interceptor", "인터셉터"]
 ---
 
-axios 인스턴스에 등록해 **모든 요청을 보내기 전, 모든 응답을 받은 뒤** 한 번씩 끼어드는 함수.
+axios 인스턴스에 등록해 모든 요청을 보내기 전, 모든 응답을 받은 뒤 한 번씩 끼어드는 함수.
 
 ## 무엇인가
 
@@ -16,9 +16,9 @@ api.interceptors.request.use(config => config, error => Promise.reject(error));
 api.interceptors.response.use(response => response, error => Promise.reject(error));
 ```
 
-- **요청 인터셉터** — `config` 를 받아 고쳐서 돌려준다. `Authorization` 헤더 주입이 대표적이다.
+- 요청 인터셉터는 `config` 를 받아 고쳐서 돌려준다. `Authorization` 헤더 주입이 대표적이다.
   `async` 도 되므로 여기서 토큰을 미리 갱신하고 보낼 수도 있다.
-- **응답 인터셉터** — 성공/실패 핸들러 두 개. 실패 쪽에서 `error.config` 로 원래 요청을 꺼내
+- 응답 인터셉터는 성공/실패 핸들러 두 개를 받는다. 실패 쪽에서 `error.config` 로 원래 요청을 꺼내
   다시 보낼 수 있다(`api(error.config)`). 401 을 받으면 갱신 후 재시도하는 패턴이 여기서 나온다.
 
 ## 401 갱신 재시도 패턴
@@ -31,7 +31,7 @@ api.interceptors.response.use(response => response, error => Promise.reject(erro
 
 ## 알아둘 것
 
-- **어떤 401 을 갱신 대상에서 뺄지** 먼저 정한다. 로그인·갱신·로그아웃 요청 자체의 401 은
+- 어떤 401 을 갱신 대상에서 뺄지 먼저 정한다. 로그인·갱신·로그아웃 요청 자체의 401 은
   만료가 아니라 그 요청의 실패다. 빼지 않으면 로그인 실패가 갱신 흐름으로 들어간다.
 - 큐를 쓰는 single-flight 플래그는 **모든 탈출 경로에서 꺼져야** 한다. `finally` 바깥에서
   return 하는 분기 하나가 이후의 모든 401 을 영원히 pending 으로 만든다.

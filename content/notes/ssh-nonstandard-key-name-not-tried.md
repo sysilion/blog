@@ -17,7 +17,7 @@ sysilion@192.168.1.132: Permission denied (publickey,password,keyboard-interacti
 ## 원인
 
 서버에 등록된 키는 `~/.ssh/id_ed2551ib` 였다. `ssh` 는 `~/.ssh/config` 에 [[ssh-identityfile|IdentityFile]] 이 없으면
-**정해진 기본 이름**(`id_rsa`, `id_ecdsa`, `id_ed25519` …)만 시도한다. 이름이 기본값이 아닌 키는 아예 보내지 않는다.
+정해진 기본 이름(`id_rsa`, `id_ecdsa`, `id_ed25519` …)만 시도한다. 이름이 기본값이 아닌 키는 아예 보내지 않는다.
 agent 도 비어 있었으니(`ssh-add -l` → `The agent has no identities.`) 시도할 수 있는 키는 `id_ed25519` 하나뿐이었고,
 서버가 그 키를 거부하자 다음 인증 방식인 비밀번호로 넘어갔다.
 
@@ -39,5 +39,7 @@ Host 192.168.1.132
   IdentityFile ~/.ssh/id_ed2551ib
   IdentitiesOnly yes
 ```
+
+## 한 줄
 
 키가 등록됐는데 비밀번호를 물으면 `ssh -v` 의 `Will attempt key` 목록에 그 키가 있는지부터 본다.

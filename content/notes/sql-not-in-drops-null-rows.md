@@ -9,7 +9,7 @@ summary: "p.category NOT IN (...) 은 category 가 NULL 인 행을 참으로 보
 ## 무슨 일이
 
 dealsignal 에서 `두근두근상투과자` 를 검색하면 결과가 0건이었다. DB 에는 상품이 있고, 필터 없이 검색하면 잘 나왔다.
-사용자는 `패션`, `스포츠` 카테고리를 **제외**한 상태로 검색하고 있었다.
+사용자는 `패션`, `스포츠` 카테고리를 제외한 상태로 검색하고 있었다.
 
 ## 원인
 
@@ -43,4 +43,6 @@ AND (:excludedCategories IS NULL OR p.category IS NULL OR p.category NOT IN :exc
 
 같은 파일의 키워드 제외는 `NOT EXISTS` 로 쓰여 있어서 이 문제가 없었다.
 
-**한 줄: 제외 조건을 `NOT IN` 으로 쓰면 NULL 행도 같이 빠진다. `IS NULL OR` 을 붙이거나 `NOT EXISTS` 를 쓴다.**
+## 한 줄
+
+NULL 이 들어갈 수 있는 컬럼에 제외 조건을 걸 땐 `NOT IN` 앞에 `IS NULL OR` 을 붙이거나 `NOT EXISTS` 로 쓴다.

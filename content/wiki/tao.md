@@ -13,15 +13,15 @@ GTK 통합처럼 데스크탑 앱에 필요한 기능이 winit보다 더 들어 
 
 ## 구조
 
-플랫폼별 구현이 `src/platform_impl/` 아래에 따로 있다 — macOS는 AppKit,
+플랫폼별 구현이 `src/platform_impl/` 아래에 따로 있다. macOS는 AppKit,
 Windows는 Win32, Linux는 GTK. Tauri는 `tauri-runtime-wry`를 통해 tao(창)와
 wry(웹뷰)를 묶는다.
 
 ## 알아둘 것
 
-창 조작 API는 대부분 **이벤트 루프로 메시지를 보내고 바로 반환한다.**
+창 조작 API는 대부분 이벤트 루프로 메시지를 보내고 바로 반환한다.
 `set_position` 직후에 `outer_position`을 읽으면 이전 값이 나온다.
 
 물리 좌표(`PhysicalPosition`/`PhysicalSize`)는 내부적으로 논리 좌표로 환산되는데,
-그때 쓰는 [[scale-factor|배율]]이 **창이 지금 올라가 있는 화면**의 것이다.
+그때 쓰는 [[scale-factor|배율]]이 창이 지금 올라가 있는 화면의 것이다.
 배율이 다른 모니터로 창을 옮기는 순간에는 이 값이 아직 이전 화면 것이라 좌표가 어긋난다.

@@ -27,7 +27,7 @@ curl http://localhost:9222/json
 
 ## 알아둘 것
 
-- **앱이 허락해야 보인다.** [[webview|WebView]] 는 `setWebContentsDebuggingEnabled(true)`
+- 앱이 허락해야 보인다. [[webview|WebView]] 는 `setWebContentsDebuggingEnabled(true)`
   일 때만 소켓을 연다. 상용 앱은 대개 꺼 두므로 위 `grep` 이 비면 그 길은 없다.
 - 붙을 수만 있다면 접근성 트리보다 훨씬 정확하다. 접근성 트리는 요소를 합치고 늦게
   채워지지만, DOM 은 id·class 를 그대로 준다.

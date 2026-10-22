@@ -22,7 +22,7 @@ useEffect(() => {
 
 ## 원인
 
-[[react-strict-mode|React StrictMode]]는 개발 모드에서 effect를 **붙이고 → 정리하고 → 다시 붙인다.**
+[[react-strict-mode|React StrictMode]]는 개발 모드에서 effect를 붙이고, 정리하고, 다시 붙인다.
 
 `start()`가 `await` 중일 때 `dispose()`가 먼저 돈다. `dispose()`는 그 시점의
 정리 목록을 비우지만, 목록은 아직 비어 있다. 그러고 나서 await가 풀리면 죽었어야 할 1번 인스턴스가
@@ -74,4 +74,4 @@ StrictMode를 끄면 증상은 사라지지만 원인은 남는다. 프로덕션
 
 ## 한 줄
 
-`useEffect`의 cleanup은 async 초기화가 끝나기를 기다려 주지 않는다. **await마다 확인해야 한다.**
+effect 안에서 async 초기화를 돌릴 때는 `disposed` 플래그를 두고 `await` 를 지날 때마다 확인한다. cleanup은 초기화가 끝나기를 기다려 주지 않는다.

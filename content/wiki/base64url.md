@@ -31,7 +31,7 @@ const enc = b => btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, 
 
 ## 알아둘 것
 
-- **브라우저의 `atob`/`btoa` 는 base64url 을 모른다.** 그냥 넣으면 `InvalidCharacterError` 다.
+- 브라우저의 `atob`/`btoa` 는 base64url 을 모른다. 그냥 넣으면 `InvalidCharacterError` 다.
 - 패딩 `=` 를 뺀 게 관례지만 필수는 아니다. `atob` 은 패딩이 없어도 받아준다.
 - HTML 속성에 바이너리를 실을 때 특히 유용하다. [[html-template]] 이 표준 base64 의 `+` 를
   `&#43;` 로 바꿔버리기 때문이다.

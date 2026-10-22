@@ -14,7 +14,7 @@ hide() { this.root.hidden = true; }
 
 ## 원인
 
-`hidden` 속성 자체에는 힘이 없다. 브라우저 **기본 스타일시트**에 들어 있는 한 줄이 일을 한다.
+`hidden` 속성 자체에는 힘이 없다. 브라우저 기본 스타일시트에 들어 있는 한 줄이 일을 한다.
 
 ```css
 [hidden] { display: none }
@@ -54,5 +54,5 @@ getComputedStyle(document.querySelector('.box')).display  // "flex"
 `!important` 가 필요하다. 특이도만으로는 `.screen` 같은 클래스 선택자를 못 이긴다.
 `display: grid`·`flex`·`inline-block` 을 쓰는 컴포넌트를 `el.hidden` 으로 토글할 생각이라면 이 줄이 사실상 필수다.
 
-같은 프로젝트에서 두 번 밟았다 — 한 번은 `.gfx-fallback`, 한 번은 `.screen`.
+같은 프로젝트에서 `.gfx-fallback` 과 `.screen` 으로 두 번 밟았다.
 개별 선택자마다 `[hidden]` 을 덧붙여 막는 대신 전역 규칙 하나로 두는 편이 낫다.

@@ -16,7 +16,7 @@ brew install --cask codingnoye/tap/gksdud
 
 ## 어떻게 동작하나
 
-입력 소스나 입력기를 **직접 바꾸지 않는다.** 키 매핑과 전환 이벤트만 쓴다.
+입력 소스나 입력기를 직접 바꾸지 않고, 키 매핑과 전환 이벤트만 쓴다.
 
 ```
 선택한 한영 키 ─([[hidutil]])→ F19 → 시스템 "이전 입력 소스 선택"
@@ -27,9 +27,9 @@ brew install --cask codingnoye/tap/gksdud
 
 ## 알아둘 것
 
-- **한영 키는 전역으로 하나다**(`TargetKey`). 키보드별로 다른 키를 지정할 수 없고,
+- 한영 키는 전역으로 하나다(`TargetKey`). 키보드별로 다른 키를 지정할 수 없고,
   "대상 키보드 설정"은 적용 여부(on/off)만 고른다.
-- **매핑을 장치별로 건다.** `hidutil property --get` 에는 안 보인다.
+- 매핑은 장치별로 건다. `hidutil property --get` 에는 안 보인다.
   실제 상태는 `defaults read io.gksdud.inputswitch` 로 본다.
 
   ```
@@ -38,7 +38,7 @@ brew install --cask codingnoye/tap/gksdud
   records = { ... }              # 장치별 source → target
   ```
 
-- **정상 종료해야 키보드 설정이 복원된다.** 강제 종료하거나 그대로 삭제하면
+- 정상 종료해야 키보드 설정이 복원된다. 강제 종료하거나 그대로 삭제하면
   hidutil 매핑과 시스템 단축키가 되돌려지지 않는다.
 - 자체 서명이라 첫 실행을 Gatekeeper가 막는다. "누를 때 전환"에는 손쉬운 사용 권한이 필요하다.
 - [[karabiner-elements|Karabiner]]와 같이 쓰면 키보드 목록에 실제 키보드 대신

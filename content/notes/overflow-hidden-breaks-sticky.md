@@ -25,9 +25,9 @@ aliases: ["/wiki/overflow-hidden-breaks-sticky/"]
 
 ## 원인
 
-`overflow: hidden` 인 요소는 **[[scroll-container|스크롤 컨테이너]]**다 (스크롤바가 보이지 않아도 그렇다).
-[[position-sticky]] 는 가장 가까운 스크롤 컨테이너를 기준으로 붙는데,
-그 기준이 타임라인 스크롤러가 아니라 **바 자신**이 되어 버린다.
+`overflow: hidden` 인 요소는 [[scroll-container|스크롤 컨테이너]]다 (스크롤바가 보이지 않아도 그렇다).
+[[position-sticky]] 는 가장 가까운 스크롤 컨테이너를 기준으로 붙으므로,
+기준이 타임라인 스크롤러 대신 바 자신이 되어 버린다.
 바는 자기 안에서 스크롤되지 않으므로 sticky는 아무 일도 하지 않는다.
 
 [[overflow|overflow: clip]] 은 넘치는 부분을 자르면서도 스크롤 컨테이너를 만들지 않는다.
@@ -64,7 +64,7 @@ Chrome 실측:
 { hiddenMoved: -150, clipMoved: 0 }
 ```
 
-`hidden` 쪽은 스크롤량 그대로 왼쪽으로 밀려 나간다 — sticky가 아예 걸리지 않았다.
+`hidden` 쪽은 스크롤량 그대로 왼쪽으로 밀려 나간다. sticky가 아예 걸리지 않았다.
 `clip` 쪽은 0px, 스크롤러 왼쪽 끝에 붙어 있다.
 `getComputedStyle(...).overflowX` 로 `hidden` / `clip` 을 구분할 수는 있지만,
 sticky가 죽었다는 신호는 어디에도 나오지 않는다.
@@ -79,4 +79,4 @@ sticky가 죽었다는 신호는 어디에도 나오지 않는다.
 
 ## 한 줄
 
-`overflow: hidden` 은 조용히 스크롤 컨테이너를 만든다. 안쪽 sticky가 죽으면 여기를 먼저 보라.
+sticky가 안 움직이면 조상에 `overflow: hidden` 이 있는지 먼저 보고, 자르기만 필요하면 `overflow: clip` 으로 바꾼다.

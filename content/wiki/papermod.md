@@ -7,7 +7,7 @@ summary: "이 블로그가 쓰는 Hugo 테마. 검색은 Fuse.js + index.json �
 altnames: ["hugo-PaperMod"]
 ---
 
-**PaperMod** 는 [[hugo]] 테마다. 이 블로그가 쓰고 있다.
+PaperMod 는 [[hugo]] 테마다. 이 블로그가 쓰고 있다.
 
 ## 구조
 

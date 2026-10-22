@@ -3,7 +3,7 @@ title: "Homebrew가 Python을 올리면 기존 venv가 조용히 죽는다"
 date: 2026-10-19T07:06:45+09:00
 draft: false
 tags: ["python", "macos", "homebrew"]
-summary: "venv/bin/python은 복사본이 아니라 심볼릭 링크다. 원본 버전이 지워지면 링크가 끊긴다."
+summary: "venv/bin/python은 심볼릭 링크라서, 원본 버전이 지워지면 링크가 끊긴다."
 ---
 
 ## 무슨 일이
@@ -19,7 +19,7 @@ venv/bin/python
 
 ## 원인
 
-[[venv]]의 `python`은 **심볼릭 링크**다. 링크 끝을 따라가 보면 사라진 버전이 나온다.
+[[venv]]의 `python`은 심볼릭 링크다. 링크 끝을 따라가 보면 사라진 버전이 나온다.
 
 ```bash
 ls -la venv/bin/python*
@@ -31,7 +31,7 @@ ls /opt/homebrew/opt/ | grep python   # python@3.15 만 있고 3.14는 없다
 
 Homebrew가 `python@3.14`를 `python@3.15`로 올리면서 3.14를 지웠다. `ls`는 링크 자체가
 있으니 파일을 보여주지만, 실행하면 끊긴 링크를 따라가다 실패한다. 오류 메시지는 링크가
-아니라 **링크를 시작한 파일**의 이름을 대서 원인이 감춰진다.
+아니라 링크를 시작한 파일의 이름을 대서 원인이 감춰진다.
 
 ## 그래서
 
