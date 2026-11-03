@@ -13,7 +13,7 @@ sdl2-compat은 SDL2의 ABI를 그대로 내보내면서 내부에서는 SDL3를 
 
 - `libSDL2-2.0.dylib` 라는 이름으로 설치되어, SDL2용으로 빌드한 프로그램이 다시 빌드하지 않고 SDL3 위에서 돈다.
 - 실행 시 `libSDL3` 을 찾아 로드한다. SDL3가 없으면 동작하지 않는다.
-- Homebrew는 2025년부터 `sdl2` 포뮬러를 sdl2-compat으로 바꿨다 (`brew list --versions` 에 `sdl2-compat` 으로 보인다).
+- Homebrew에서 `brew install sdl2` 는 sdl2-compat을 설치한다 (`brew info sdl2` 가 `sdl2-compat` 을 보여 준다).
 
 ## 알아둘 것
 
