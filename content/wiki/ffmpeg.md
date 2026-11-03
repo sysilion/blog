@@ -22,3 +22,11 @@ ffmpeg -allowed_extensions ALL -extension_picky 0 -i playlist.m3u8 ...
 플레이리스트가 임의 로컬 경로를 참조하지 못하게 막는 보안 장치인데, 정상 CDN 스트림도 같이 걸린다.
 
 기본 [[user-agent]] 가 CDN에서 거부되는 일도 흔하므로 `-user_agent` 를 함께 지정하는 편이 안전하다.
+
+옵션은 자리에 따라 붙는 대상이 다르다. `-i` 앞에 쓰면 그 입력의 옵션, `-i` 뒤에 쓰면 출력 옵션이다.
+입력 전용 옵션을 `-i` 뒤에 두면 오류 없이 버려진다. `-protocol_whitelist` 로 열 수 있는 프로토콜을
+제한할 때 특히 그렇다. 원격 [[hls]] 에는 `http,https,tcp,tls` 에 더해 AES 키를 읽는 `crypto` 가 필요하다.
+
+```bash
+ffmpeg -protocol_whitelist http,https,tcp,tls,crypto -i https://.../playlist.m3u8 ...
+```
