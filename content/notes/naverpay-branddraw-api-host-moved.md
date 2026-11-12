@@ -22,7 +22,7 @@ summary: "/internal/branddraw 만 엿듣던 코드가 campaign2-api 응답을 �
 page.on("response", lambda r: "branddraw" in r.url
         and r.request.resource_type in ("xhr", "fetch")
         and print(r.url))
-page.goto("https://campaign2.naver.com/npay/branddraw/")
+page.goto("https://mkt-npay.naver.com/npay/branddraw/")
 # mkt-api.../internal/branddraw/renewal/apply        → null
 # campaign2-api.../branddraw/renewal/apply/status    → {"code":"success","data":{...}}
 ```
